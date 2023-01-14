@@ -1,0 +1,47 @@
+[
+  {
+    "title": "Moby-Dick",
+    "author": "Herman Melville",
+    "genre": ["Adventure Fiction", "Epic"],
+    "copiesSold": 12715,
+    "rating": 4,
+    "publisher": "Harper and Brothers",
+    "price": 12.99
+  },
+  {
+    "title": "Little Women",
+    "author": "L.M Alcott",
+    "genre": ["Young Adult", "Comedy"],
+    "copiesSold": 100456,
+    "rating": 4.5,
+    "publisher": "Roberts Brothers",
+    "price": 16.99
+  },
+  {
+    "title": "It",
+    "author": "Stephen King",
+    "genre": ["Thriller", "Mystery"],
+    "copiesSold": 124685,
+    "rating": 4.2,
+    "publisher": "Scribner",
+    "price": 26.99
+  },
+  {
+    "title": "Song of Achilles",
+    "author": "Madeline Miller",
+    "genre": ["Romance", "Historical Fiction"],
+    "copiesSold": 203789,
+    "rating": 4.5,
+    "publisher": "Ecco Press",
+    "price": 13.99
+  },
+  {
+    "title": "Fairy Tale",
+    "author": "Stephen King",
+    "genre": ["Fantasy", "Thriller"],
+    "copiesSold": 98344,
+    "rating": 4.2,
+    "publisher": "Scribner",
+    "price": 16.99
+  }
+]
