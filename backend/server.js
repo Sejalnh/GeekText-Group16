@@ -60,11 +60,11 @@ app.get("/books/rating/:rating", async (req, res) => {
 // 1.4 Discount books by publisher
 app.put("/books/discount", async (req, res) => {
   const percentDiscount = 1.0 - parseFloat(req.body.percentDiscount) / 100.0;
-  const publisher = req.body.publisher;
+  const publisher_param = req.body.publisher;
 
   try {
     const books = await Books.updateMany(
-      { publisher },
+      { publisher: publisher_param },
       { $mul: { price: percentDiscount } }
     );
     res.status(200).json(books);
