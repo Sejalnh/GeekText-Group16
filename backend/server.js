@@ -13,7 +13,7 @@ const MONGO_URI =
 const app = express();
 
 // MIDDLE-WARE
-app.use(express.urlencoded());
+app.use(express.urlencoded()); // ensure we can parse the URL parameters correctly
 app.use(cors());
 
 // CONNECT TO DATABASE
@@ -24,14 +24,14 @@ mongoose.connect(MONGO_URI, { useNewUrlParser: true }, () =>
 // ROUTES
 // ------------------------------ Feature 1 ---------------------------------------
 // 1.1 Retrieve List of Books by Genre
-app.get("/books/genre/:genre", async (req, res) => {
-  const genre = req.params.genre;
+app.get("/books/genre/:genre", async (request, response) => {
+  const genre = request.params.genre; // retrieve the genre from the URL
 
   try {
-    const books = await Books.find({ genre });
-    res.status(200).json(books);
+    const books = await Books.find({ genre }); // wait for books to be retrieved ASYNCHRONOUSLY
+    response.status(200).json(books);
   } catch (error) {
-    res.status(404).json({ message: error });
+    response.status(404).json({ message: error });
   }
 });
 
