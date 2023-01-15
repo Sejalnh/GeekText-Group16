@@ -2,7 +2,7 @@
   {
     "title": "Moby-Dick",
     "author": "Herman Melville",
-    "genre": ["Adventure Fiction", "Epic"],
+    "genre": "Epic",
     "copiesSold": 12715,
     "rating": 4,
     "publisher": "Harper and Brothers",
@@ -11,7 +11,7 @@
   {
     "title": "Little Women",
     "author": "L.M Alcott",
-    "genre": ["Young Adult", "Comedy"],
+    "genre": "Comedy",
     "copiesSold": 100456,
     "rating": 4.5,
     "publisher": "Roberts Brothers",
@@ -20,7 +20,7 @@
   {
     "title": "It",
     "author": "Stephen King",
-    "genre": ["Thriller", "Mystery"],
+    "genre": "Thriller",
     "copiesSold": 124685,
     "rating": 4.2,
     "publisher": "Scribner",
@@ -29,7 +29,7 @@
   {
     "title": "Song of Achilles",
     "author": "Madeline Miller",
-    "genre": ["Romance", "Historical Fiction"],
+    "genre": "Romance",
     "copiesSold": 203789,
     "rating": 4.5,
     "publisher": "Ecco Press",
@@ -38,7 +38,7 @@
   {
     "title": "Fairy Tale",
     "author": "Stephen King",
-    "genre": ["Fantasy", "Thriller"],
+    "genre": "Thriller",
     "copiesSold": 98344,
     "rating": 4.2,
     "publisher": "Scribner",
