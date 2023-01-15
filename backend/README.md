@@ -6,7 +6,7 @@ Online bookstore web app with REST API.
 
 1. Install the dependencies (packages): `npm install`
 2. Run `npm run start` to initialize the server.
-3. API entry point: `http://localhost:5000/`
+3. API entry point: `http://localhost:3000/` _(used in Postman)_
 
 ## MongoDB (Atlas) - Credentials
 
