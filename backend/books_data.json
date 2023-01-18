@@ -43,5 +43,50 @@
     "rating": 4.2,
     "publisher": "Scribner",
     "price": 16.99
+  },
+  {
+    "title": "Chainsaw Man Vol. 1",
+    "author": "Taksuki Fujimoto",
+    "genre": "Manga",
+    "copiesSold": 56478,
+    "rating": 5,
+    "publisher": "VIZ Media LLC",
+    "price": 9.99
+  },
+  {
+    "title": "Spare",
+    "author": "Prince Harry",
+    "genre": "Autobiography",
+    "copiesSold": 302456,
+    "rating": 3.9,
+    "publisher": "Random House Publishing Group",
+    "price": 24.99
+  },
+  {
+    "title": "The Mayfair Witches",
+    "author": "Anne Rice",
+    "genre": "Mystery",
+    "copiesSold": 45678,
+    "rating": 4.2,
+    "publisher": "Random House Publishing Group",
+    "price": 29.99
+  },
+  {
+    "title": "The Pasta Queen: A Just Gorgeous Cookbook",
+    "author": "Nadia Caterina Munno",
+    "genre": "Cookbooks",
+    "copiesSold": 32456,
+    "rating": 5,
+    "publisher": "Gallery Books",
+    "price": 15.99
+  },
+  {
+    "title": "Enemy Pie",
+    "author": "Derek Munson",
+    "genre": "Children’s",
+    "copiesSold": 12567,
+    "rating": 3.8,
+    "publisher": "Chronicle Books LLC",
+    "price": 12.99
   }
 ]
