@@ -22,14 +22,9 @@ app.use(express.urlencoded()); // ensure we can parse the URL parameters correct
 app.use(cors());
 
 // CONNECT TO DATABASE
-// mongoose.connect(MONGO_URI, { useNewUrlParser: true }, () =>
-//   console.log(`MongoDB connected...`)
-// );
-const db = () => Promise.resolve(mongoose.connect(MONGO_URI, options));
-
-db()
-  .then(() => console.log("MongoDB connected..."))
-  .catch((e) => console.error("Mongo not connected..."));
+mongoose.connect(MONGO_URI, { useNewUrlParser: true }, () =>
+  console.log(`MongoDB connected...`)
+);
 
 // ROUTES
 // ------------------------------ Feature 1 ---------------------------------------
