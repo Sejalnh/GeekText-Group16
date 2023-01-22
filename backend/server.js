@@ -79,11 +79,4 @@ app.put("/books/discount", async (req, res) => {
 });
 
 // ----------------------------------------------------------------------------------
-
-// ROUTES
-// ------------------------------ Feature 3 ---------------------------------------
-// 3.1 Retrieve List of Books by Genre
-app.get("", async (request, response) => {});
-// ----------------------------------------------------------------------------------
-
 app.listen(PORT, () => console.log(`Server started on port ${PORT}...`));
