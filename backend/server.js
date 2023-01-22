@@ -6,12 +6,14 @@ const cors = require("cors");
 
 // TODO: move into .env for PRODUCTION
 const PORT = 3000;
-const MONGO_URI = "mongodb+srv://admin1:1234@cluster0.qngmqvw.mongodb.net/?retryWrites=true&w=majority";
+const MONGO_URI =
+  "mongodb+srv://admin1:1234@cluster0.qngmqvw.mongodb.net/GeekTextDB?retryWrites=true&w=majority";
 
 const options = {
-useNewUrlParser: true,
-useUnifiedTopology: true
-}
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+};
+
 // START THE APP
 const app = express();
 
@@ -23,11 +25,11 @@ app.use(cors());
 // mongoose.connect(MONGO_URI, { useNewUrlParser: true }, () =>
 //   console.log(`MongoDB connected...`)
 // );
-const db = () => Promise.resolve(mongoose.connect(MONGO_URI,options))
+const db = () => Promise.resolve(mongoose.connect(MONGO_URI, options));
 
 db()
-  .then(() => console.log('MongoDB connected...'))
-  .catch(e => console.error('Mongo not connected...'));
+  .then(() => console.log("MongoDB connected..."))
+  .catch((e) => console.error("Mongo not connected..."));
 
 // ROUTES
 // ------------------------------ Feature 1 ---------------------------------------
