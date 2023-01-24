@@ -54,7 +54,6 @@ app.post("/books/create", async (request, response) => {
     response.status(200).send(books);
   } catch (error) {
     response.status(404).send(error.message);
-    console.log(error.message);
   }
 });
 
