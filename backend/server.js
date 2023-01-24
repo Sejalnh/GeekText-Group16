@@ -5,7 +5,7 @@ const Books = require("./models/booksModel");
 const cors = require("cors");
 
 // TODO: move into .env for PRODUCTION
-const PORT = 4000;
+const PORT = 3000;
 const MONGO_URI =
   "mongodb+srv://admin1:1234@cluster0.qngmqvw.mongodb.net/GeekTextDB?retryWrites=true&w=majority";
 
