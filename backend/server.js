@@ -11,7 +11,7 @@ const MONGO_URI =
 
 const options = {
   useNewUrlParser: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
 };
 
 // START THE APP
@@ -37,7 +37,7 @@ app.post("/books/create", async (request, response) => {
   const { title, ISBN, author, genre, copiesSold, rating, publisher, price } =
     request.body;
 
-  let books = new Books({
+  const books = new Books({
     title,
     ISBN,
     author,
@@ -45,13 +45,13 @@ app.post("/books/create", async (request, response) => {
     copiesSold,
     rating,
     publisher,
-    price
+    price,
   });
 
   try {
     books = await books.save();
     //response.status(200).json(books);
-    response.send(books);
+    response.status(200).send(books);
   } catch (error) {
     response.status(404).send(error.message);
     console.log(error.message);
