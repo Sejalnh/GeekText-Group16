@@ -11,7 +11,7 @@ const MONGO_URI =
 
 const options = {
   useNewUrlParser: true,
-  useUnifiedTopology: true,
+  useUnifiedTopology: true
 };
 
 // START THE APP
