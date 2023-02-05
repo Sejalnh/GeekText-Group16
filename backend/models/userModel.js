@@ -54,14 +54,14 @@ const userSchema = mongoose.Schema({
       type: String,
       required: false,
       uppercase: true,
-      minlength: 2,
-      maxlength: 2
+      minlength: [2, "State must have 2 letters"],
+      maxlength: [2, "State must have 2 letters"]
     },
     zipCode: {
       type: Number,
       required: false,
-      minlength: 5,
-      maxlength: 5
+      minlength: [5, "Zip code must be 5 numbers"],
+      maxlength: [5, "Zip code must be 5 numbers"]
     }
   },
   email: {
