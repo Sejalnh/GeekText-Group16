@@ -40,14 +40,12 @@ app.get("/books", async (request, response) => {
   }
 });
 
-// "/books/id/BOOK_ID" returns the book with specified _id
-app.get("/books/id/:bookID", async (req, res) => {
-  const bookID = req.params.bookID;
-  if (!mongoose.Types.ObjectId.isValid(bookID))
-    return res.status(404).json({ message: `No book with id: ${bookID}` });
+// "/books/isbn/ISBN_NUMBER" returns the book with specified ISBN
+app.get("/books/isbn/:isbn", async (req, res) => {
+  const isbn = parseInt(req.params.isbn);
 
   try {
-    const book = await Books.findById(bookID);
+    const book = await Books.find({ ISBN: isbn });
     res.status(200).json(book);
   } catch (error) {
     res.status(404).json({ message: error });
@@ -64,14 +62,12 @@ app.get("/users", async (req, res) => {
   }
 });
 
-// "/users/id/BOOK_ID" returns the user with specified _id
-app.get("/users/id/:userID", async (req, res) => {
-  const userID = req.params.userID;
-  if (!mongoose.Types.ObjectId.isValid(userID))
-    return res.status(404).json({ message: `No user with id: ${userID}` });
+// "/users/username/USERNAME" returns the user with specified username
+app.get("/users/username/:username", async (req, res) => {
+  const username = req.params.username;
 
   try {
-    const user = await User.findById(userID);
+    const user = await User.find({ username });
     res.status(200).json(user);
   } catch (error) {
     res.status(404).json({ message: error });
