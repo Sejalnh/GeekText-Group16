@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const validator = require("validator");
 
 const creditCardSchema = mongoose.Schema({
   creditCardNumber: {
@@ -66,6 +67,13 @@ const userSchema = mongoose.Schema({
   },
   name: [nameSchema],
   homeAddress: [homeAddressSchema],
+  email: {
+    type: String,
+    required: false,
+    unique: true,
+    lowercase: true,
+    validate: [validator.isEmail, "Please provide a valid email"]
+  },
   wishlist: {
     type: Map,
     of: [String],
