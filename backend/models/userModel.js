@@ -53,6 +53,7 @@ const userSchema = mongoose.Schema({
     state: {
       type: String,
       required: false,
+      uppercase: true,
       minlength: 2,
       maxlength: 2
     },
