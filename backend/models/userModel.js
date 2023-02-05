@@ -16,29 +16,6 @@ const creditCardSchema = mongoose.Schema({
   }
 });
 
-const homeAddressSchema = new mongoose.Schema({
-  street: {
-    type: String,
-    required: false
-  },
-  city: {
-    type: String,
-    required: false
-  },
-  state: {
-    type: String,
-    required: false,
-    minlength: 2,
-    maxlength: 2
-  },
-  zipCode: {
-    type: Number,
-    required: false,
-    minlength: 5,
-    maxlength: 5
-  }
-});
-
 const userSchema = mongoose.Schema({
   username: {
     type: String,
@@ -64,7 +41,28 @@ const userSchema = mongoose.Schema({
       required: false
     }
   },
-  homeAddress: [homeAddressSchema],
+  homeAddress: {
+    street: {
+      type: String,
+      required: false
+    },
+    city: {
+      type: String,
+      required: false
+    },
+    state: {
+      type: String,
+      required: false,
+      minlength: 2,
+      maxlength: 2
+    },
+    zipCode: {
+      type: Number,
+      required: false,
+      minlength: 5,
+      maxlength: 5
+    }
+  },
   email: {
     type: String,
     required: false,
