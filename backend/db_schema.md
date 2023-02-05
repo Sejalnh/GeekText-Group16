@@ -30,25 +30,27 @@
   "ISBN": ISBN_NUMBER,
   "description": "BOOK_DESCRIPTION",
   "yearPublished": YEAR_PUBLISHED,
-  "ratings": {
-    "$USER_ID_1" : {
+  "ratings": [
+    {
+      "user": "$USER_ID_1",
       "rating": USER_RATING_1,
       "datestamp": "YYYY-mm-dd"
     },
-    "$USER_ID_2" : {
+    {
+      "user": "$USER_ID_2",
       "rating": USER_RATING_2,
       "datestamp": "YYYY-mm-dd"
     },
-  },
+  ],
   "comments": [
     {
-      "comment": "COMMENT_1",
       "user": "$USER_ID_1",
+      "comment": "COMMENT_1",
       "datestamp": "YYYY-mm-dd"
     },
     {
-      "comment": "COMMENT_2",
       "user": "$USER_ID_2",
+      "comment": "COMMENT_2",
       "datestamp": "YYYY-mm-dd"
     }
   ]
