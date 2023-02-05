@@ -1,8 +1,9 @@
 const mongoose = require("mongoose");
+const userSchema = require("./userModel");
 
 const ratingSchema = mongoose.Schema({
   user: {
-    type: mongoose.ObjectId,
+    type: mongoose.Types.ObjectId,
     required: true
   },
   rating: {
@@ -16,13 +17,13 @@ const ratingSchema = mongoose.Schema({
   datestamp: {
     type: Date,
     default: Date.now,
-    required: false
+    required: true
   }
 });
 
 const commentSchema = mongoose.Schema({
   user: {
-    type: mongoose.ObjectId,
+    type: mongoose.Types.ObjectId,
     required: true
   },
   comment: {
@@ -34,7 +35,7 @@ const commentSchema = mongoose.Schema({
   datestamp: {
     type: Date,
     default: Date.now,
-    required: false
+    required: true
   }
 });
 
