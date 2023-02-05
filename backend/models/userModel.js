@@ -26,6 +26,29 @@ const nameSchema = new mongoose.Schema({
   }
 });
 
+const homeAddressSchema = new mongoose.Schema({
+  street: {
+    type: String,
+    required: false
+  },
+  city: {
+    type: String,
+    required: false
+  },
+  state: {
+    type: String,
+    required: false,
+    minlength: 2,
+    maxlength: 2
+  },
+  zipCode: {
+    type: Number,
+    required: false,
+    minlength: 5,
+    maxlength: 5
+  }
+});
+
 const userSchema = mongoose.Schema({
   username: {
     type: String,
@@ -42,6 +65,7 @@ const userSchema = mongoose.Schema({
     minLength: 5
   },
   name: [nameSchema],
+  homeAddress: [homeAddressSchema],
   wishlist: {
     type: Map,
     of: [String],
