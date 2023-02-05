@@ -20,7 +20,8 @@ const options = {
 const app = express();
 
 // MIDDLE-WARE
-app.use(express.urlencoded()); // ensure we can parse the URL parameters correctly
+app.use(express.json());
+app.use(express.urlencoded({ extended: true })); // ensure we can parse the URL parameters correctly
 app.use(cors());
 
 // CONNECT TO DATABASE
