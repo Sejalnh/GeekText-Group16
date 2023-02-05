@@ -66,12 +66,12 @@
   "password": "PASSWORD",
   "wishlist": {
     "WISHLIST_NAME_1": ["$BOOK_ID_1", "$BOOK_ID_2"],
-    "WISHLIST_NAME_2": ["$BOOK_ID_3"],
+    "WISHLIST_NAME_2": ["$BOOK_ID_3"]
   },
   "creditCards": [
     {
-      "creditCardNumber": "CC_NUMBER",
-      "securityCode": SECURITY_CODE,
+      "number": "CC_NUMBER",
+      "securityCode": "SECURITY_CODE",
       "expirationDate": "YYYY-mm"
     }
   ],
