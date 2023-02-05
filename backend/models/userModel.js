@@ -25,6 +25,11 @@ const userSchema = mongoose.Schema({
     type: String,
     required: true
   },
+  passwordConfirm: {
+    type: String,
+    required: [true, "Please provide your password"],
+    minLength: 5
+  },
   wishlist: {
     type: Map,
     of: [String],
