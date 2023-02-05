@@ -14,7 +14,7 @@ const authorModel = mongoose.Schema({
   biography: {
     type: String,
     default: "No biography provided!",
-    required: false,
+    required: true,
     trim: true
   },
   publisher: {

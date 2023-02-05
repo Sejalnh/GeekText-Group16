@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 
 const ratingSchema = mongoose.Schema({
-  user: {
-    type: mongoose.Types.ObjectId,
+  username: {
+    type: String,
     required: true
   },
   rating: {
@@ -19,14 +19,14 @@ const ratingSchema = mongoose.Schema({
 });
 
 const commentSchema = mongoose.Schema({
-  user: {
-    type: mongoose.Types.ObjectId,
+  username: {
+    type: String,
     required: true
   },
   comment: {
     type: String,
     default: "No comment was left.",
-    required: false,
+    required: true,
     trim: true
   },
   datestamp: {
@@ -79,7 +79,7 @@ const booksSchema = mongoose.Schema({
   description: {
     type: String,
     default: "No description found!",
-    required: false,
+    required: true,
     minLength: 0,
     maxLength: 1000,
     trim: true

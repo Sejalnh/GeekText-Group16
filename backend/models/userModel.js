@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const creditCardSchema = mongoose.Schema({
-  number: {
+  creditCardNumber: {
     type: Number,
     required: true
   },
@@ -27,11 +27,11 @@ const userSchema = mongoose.Schema({
   },
   wishlist: {
     type: Map,
-    of: [mongoose.Types.ObjectId],
+    of: [String],
     required: true
   },
   creditCards: [creditCardSchema],
-  shoppingCart: [mongoose.Types.ObjectId]
+  shoppingCart: [String]
 });
 
 module.exports = mongoose.model("User", userSchema);
