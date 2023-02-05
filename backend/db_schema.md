@@ -30,25 +30,29 @@
   "ISBN": ISBN_NUMBER,
   "description": "BOOK_DESCRIPTION",
   "yearPublished": YEAR_PUBLISHED,
-  "ratings": {
-    "$USER_ID_1" : {
+  "averageRating": RATING,
+  "ratings": [
+    {
+      "username": "USERNAME_1",
       "rating": USER_RATING_1,
       "datestamp": "YYYY-mm-dd"
     },
-    "$USER_ID_2" : {
+    {
+      "username": "USERNAME__2",
       "rating": USER_RATING_2,
       "datestamp": "YYYY-mm-dd"
-    },
-  },
+    }
+    ...
+  ],
   "comments": [
     {
+      "username": "USERNAME_1",
       "comment": "COMMENT_1",
-      "user": "$USER_ID_1",
       "datestamp": "YYYY-mm-dd"
     },
     {
+      "username": "USERNAME_2",
       "comment": "COMMENT_2",
-      "user": "$USER_ID_2",
       "datestamp": "YYYY-mm-dd"
     }
   ]
@@ -63,17 +67,17 @@
   "username": "USERNAME",
   "password": "PASSWORD",
   "wishlist": {
-    "WISHLIST_NAME_1": ["$BOOK_ID_1", "$BOOK_ID_2"],
-    "WISHLIST_NAME_2": ["$BOOK_ID_3"],
+    "WISHLIST_NAME_1": ["ISBN_1", "ISBN_2"],
+    "WISHLIST_NAME_2": ["ISBN_3"]
   },
   "creditCards": [
     {
       "creditCardNumber": "CC_NUMBER",
-      "securityCode": SECURITY_CODE,
+      "securityCode": "SECURITY_CODE",
       "expirationDate": "YYYY-mm"
     }
   ],
-  "shoppingCart": ["$BOOK_ID_1", "$BOOK_ID_2"]
+  "shoppingCart": ["ISBN_1", "ISBN_2"]
 }
 ```
 

@@ -4,7 +4,7 @@
   "description": "Online bookstore web app with REST API.",
   "main": "server.js",
   "scripts": {
-    "devStart": "nodemon server.js"
+    "start": "nodemon server.js"
   },
   "repository": {
     "type": "git",

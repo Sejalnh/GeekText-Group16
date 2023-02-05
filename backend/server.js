@@ -2,6 +2,8 @@ const express = require("express");
 const dotenv = require("dotenv").config(); // TODO: ADD .env for PRODUCTION
 const mongoose = require("mongoose");
 const Books = require("./models/booksModel");
+const User = require("./models/userModel");
+const Author = require("./models/authorModel");
 const cors = require("cors");
 
 // TODO: move into .env for PRODUCTION
@@ -18,7 +20,8 @@ const options = {
 const app = express();
 
 // MIDDLE-WARE
-app.use(express.urlencoded()); // ensure we can parse the URL parameters correctly
+app.use(express.json());
+app.use(express.urlencoded({ extended: true })); // ensure we can parse the URL parameters correctly
 app.use(cors());
 
 // CONNECT TO DATABASE
@@ -27,6 +30,78 @@ mongoose.connect(MONGO_URI, { useNewUrlParser: true }, () =>
 );
 
 // ROUTES
+// "/books" returns all books within the database
+app.get("/books", async (request, response) => {
+  try {
+    const books = await Books.find(); // wait for books to be retrieved ASYNCHRONOUSLY
+    response.status(200).json(books);
+  } catch (error) {
+    response.status(404).json({ message: error });
+  }
+});
+
+// "/books/id/BOOK_ID" returns the book with specified _id
+app.get("/books/id/:bookID", async (req, res) => {
+  const bookID = req.params.bookID;
+  if (!mongoose.Types.ObjectId.isValid(bookID))
+    return res.status(404).json({ message: `No book with id: ${bookID}` });
+
+  try {
+    const book = await Books.findById(bookID);
+    res.status(200).json(book);
+  } catch (error) {
+    res.status(404).json({ message: error });
+  }
+});
+
+// "/users" returns all books within the database
+app.get("/users", async (req, res) => {
+  try {
+    const users = await User.find();
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(404).json({ message: error });
+  }
+});
+
+// "/users/id/BOOK_ID" returns the user with specified _id
+app.get("/users/id/:userID", async (req, res) => {
+  const userID = req.params.userID;
+  if (!mongoose.Types.ObjectId.isValid(userID))
+    return res.status(404).json({ message: `No user with id: ${userID}` });
+
+  try {
+    const user = await User.findById(userID);
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(404).json({ message: error });
+  }
+});
+
+// "/authors" returns all authors within the database
+app.get("/authors", async (req, res) => {
+  try {
+    const authors = await Author.find();
+    res.status(200).json(authors);
+  } catch (error) {
+    res.status(404).json({ message: error });
+  }
+});
+
+// "/authors/id/AUTHOR_ID" returns the user with specified _id
+app.get("/authors/id/:authorID", async (req, res) => {
+  const authorID = req.params.authorID;
+  if (!mongoose.Types.ObjectId.isValid(authorID))
+    return res.status(404).json({ message: `No author with id: ${authorID}` });
+
+  try {
+    const author = await Author.findById(authorID);
+    res.status(200).json(author);
+  } catch (error) {
+    res.status(404).json({ message: error });
+  }
+});
+
 // ------------------------------ Feature 1 ---------------------------------------
 // 1.1 Retrieve List of Books by Genre
 app.get("/books/genre/:genre", async (request, response) => {
