@@ -11,9 +11,7 @@ const ratingSchema = mongoose.Schema({
     type: Number,
     required: true,
     min: 0,
-    max: 5,
-    get: v => Math.round(v),
-    set: v => Math.round(v)
+    max: 5
   },
   datestamp: {
     type: Date,
@@ -59,9 +57,7 @@ const booksSchema = mongoose.Schema({
   },
   copiesSold: {
     type: Number,
-    required: true,
-    get: v => Math.floor(v),
-    set: v => Math.floor(v)
+    required: true
   },
   publisher: {
     type: String,
@@ -77,15 +73,11 @@ const booksSchema = mongoose.Schema({
   price: {
     type: Number,
     required: true,
-    min: 0,
-    get: v => Math.round(v),
-    set: v => Math.round(v)
+    min: 0
   },
   isbn: {
     type: Number,
-    required: true,
-    get: v => Math.floor(v),
-    set: v => Math.floor(v)
+    required: true
   },
   description: {
     type: String,
@@ -97,9 +89,7 @@ const booksSchema = mongoose.Schema({
   },
   yearPublished: {
     type: Number,
-    required: true,
-    get: v => Math.floor(v),
-    set: v => Math.floor(v)
+    required: true
   },
   ratings: [ratingSchema],
   comments: [commentSchema]
