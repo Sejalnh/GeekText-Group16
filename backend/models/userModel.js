@@ -15,6 +15,17 @@ const creditCardSchema = mongoose.Schema({
   }
 });
 
+const nameSchema = new mongoose.Schema({
+  firstName: {
+    type: String,
+    required: false
+  },
+  lastName: {
+    type: String,
+    required: false
+  }
+});
+
 const userSchema = mongoose.Schema({
   username: {
     type: String,
@@ -30,6 +41,7 @@ const userSchema = mongoose.Schema({
     required: [true, "Please provide your password"],
     minLength: 5
   },
+  name: [nameSchema],
   wishlist: {
     type: Map,
     of: [String],
