@@ -156,6 +156,12 @@ app.put("/books/discount", async (req, res) => {
 // ----------------------------------------------------------------------------------
 
 // ------------------------------ Feature 3 ---------------------------------------
+// 3.1 Retrieve the subtotal price of all items in the user’s shopping cart. 
 
+// 3.2 Add a book to the shopping cart. 
+
+// 3.3 Retrieve the list of book(s) in the user’s shopping cart. 
+
+// 3.4 Delete a book from the shopping cart instance for that user.
 // ----------------------------------------------------------------------------------
 app.listen(PORT, () => console.log(`Server started on port ${PORT}...`));
