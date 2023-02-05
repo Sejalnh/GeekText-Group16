@@ -16,17 +16,6 @@ const creditCardSchema = mongoose.Schema({
   }
 });
 
-const nameSchema = new mongoose.Schema({
-  firstName: {
-    type: String,
-    required: false
-  },
-  lastName: {
-    type: String,
-    required: false
-  }
-});
-
 const homeAddressSchema = new mongoose.Schema({
   street: {
     type: String,
@@ -65,7 +54,16 @@ const userSchema = mongoose.Schema({
     required: [true, "Please provide your password"],
     minLength: 5
   },
-  name: [nameSchema],
+  name: {
+    firstName: {
+      type: String,
+      required: false
+    },
+    lastName: {
+      type: String,
+      required: false
+    }
+  },
   homeAddress: [homeAddressSchema],
   email: {
     type: String,
