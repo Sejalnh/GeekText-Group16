@@ -30,6 +30,7 @@
   "ISBN": ISBN_NUMBER,
   "description": "BOOK_DESCRIPTION",
   "yearPublished": YEAR_PUBLISHED,
+  rating: RATING,
   "ratings": [
     {
       "user": "$USER_ID_1",

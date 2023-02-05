@@ -4,6 +4,7 @@ const userSchema = require("./userModel");
 const ratingSchema = mongoose.Schema({
   user: {
     type: mongoose.Types.ObjectId,
+    ref: "User",
     required: true
   },
   rating: {
@@ -24,6 +25,7 @@ const ratingSchema = mongoose.Schema({
 const commentSchema = mongoose.Schema({
   user: {
     type: mongoose.Types.ObjectId,
+    ref: "User",
     required: true
   },
   comment: {
@@ -65,6 +67,12 @@ const booksSchema = mongoose.Schema({
     type: String,
     required: true,
     trim: true
+  },
+  rating: {
+    type: Number,
+    required: false,
+    min: 0,
+    max: 5
   },
   price: {
     type: Number,
