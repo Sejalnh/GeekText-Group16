@@ -3,6 +3,7 @@ const dotenv = require("dotenv").config(); // TODO: ADD .env for PRODUCTION
 const mongoose = require("mongoose");
 const Books = require("./models/booksModel");
 const User = require("./models/userModel");
+const Author = require("./models/authorModel");
 const cors = require("cors");
 
 // TODO: move into .env for PRODUCTION
@@ -71,6 +72,30 @@ app.get("/users/id/:userID", async (req, res) => {
   try {
     const user = await User.findById(userID);
     res.status(200).json(user);
+  } catch (error) {
+    res.status(404).json({ message: error });
+  }
+});
+
+// "/authors" returns all authors within the database
+app.get("/authors", async (req, res) => {
+  try {
+    const authors = await Author.find();
+    res.status(200).json(authors);
+  } catch (error) {
+    res.status(404).json({ message: error });
+  }
+});
+
+// "/authors/id/AUTHOR_ID" returns the user with specified _id
+app.get("/authors/id/:authorID", async (req, res) => {
+  const authorID = req.params.authorID;
+  if (!mongoose.Types.ObjectId.isValid(authorID))
+    return res.status(404).json({ message: `No author with id: ${authorID}` });
+
+  try {
+    const author = await Author.findById(authorID);
+    res.status(200).json(author);
   } catch (error) {
     res.status(404).json({ message: error });
   }
