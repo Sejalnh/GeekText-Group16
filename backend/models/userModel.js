@@ -4,11 +4,11 @@ const bcrypt = require("bcryptjs");
 
 const creditCardSchema = mongoose.Schema({
   creditCardNumber: {
-    type: Number,
+    type: String,
     required: true
   },
   securityCode: {
-    type: Number,
+    type: String,
     required: true
   },
   expirationDate: {
