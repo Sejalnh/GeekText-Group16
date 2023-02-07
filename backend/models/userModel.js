@@ -24,12 +24,12 @@ const userSchema = mongoose.Schema({
   },
   password: {
     type: String,
-    required: true
+    required: true,
+    minlength: 5
   },
   passwordConfirm: {
     type: String,
-    required: [true, "Please provide your password"],
-    minLength: 5
+    required: [true, "Please provide your password"]
   },
   name: {
     firstName: {
