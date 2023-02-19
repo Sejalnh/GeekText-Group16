@@ -30,7 +30,7 @@ mongoose.connect(MONGO_URI, { useNewUrlParser: true }, () =>
 // ROUTES
 
 // ------------------------------ Feature 6 ---------------------------------------
-// 1.1 Must be able to create a wishlist of books that belongs to user and 
+// 6.1 Must be able to create a wishlist of books that belongs to user and 
 //     has a unique name 
 app.post ("/wishlist/create", async (request, response) => {
   const { name, userId, items } = req.body; 
@@ -47,6 +47,13 @@ app.post ("/wishlist/create", async (request, response) => {
     response.status(400).json({message : error});
   }
 });
+
+// 6.2 Must be able to add a book to a user’s wishlisht 
+
+// 6.3 Must be able to remove a book from a user’s wishlist into the 
+//     user’s shopping cart 
+
+// 6.4 Must be able to list the book’s in a user’s wishlist 
 
 // ----------------------------------------------------------------------------------
 
