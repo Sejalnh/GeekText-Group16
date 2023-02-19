@@ -7,13 +7,14 @@ const wishlistModel = mongoose.Schema({
     trim: true
   },
   userId: {
-    type:String, 
-    required: true,
+    type: String,
+    required: true
   },
   items: {
-    type: String, 
+    type: String,
     required: true
   }
 });
 
+module.exports = mongoose.model("Wishlist", wishlistModel);
 module.exports = mongoose.model("Wishlist", wishlistModel);
