@@ -5,6 +5,7 @@ const Books = require("./models/booksModel");
 const User = require("./models/userModel");
 const Author = require("./models/authorModel");
 const cors = require("cors");
+const Wishlist = require("./models/wishlistModel");
 
 // TODO: move into .env for PRODUCTION
 const PORT = 3000;
@@ -30,6 +31,35 @@ mongoose.connect(MONGO_URI, { useNewUrlParser: true }, () =>
 );
 
 // ROUTES
+// ------------------------------ Feature 6 ---------------------------------------
+// 6.1 Must be able to create a wishlist of books that belongs to user and
+//     has a unique name
+app.post("/wishlists/create", async (req, res) => {
+  const { name, username, items } = req.body;
+
+  const wish = new Wishlist({
+    name,
+    username,
+    items
+  });
+
+  try {
+    await wish.save();
+    res.status(200).send("Wishlist created!");
+  } catch (error) {
+    res.status(400).json({ message: error });
+  }
+});
+
+// 6.2 Must be able to add a book to a user’s wishlisht
+
+// 6.3 Must be able to remove a book from a user’s wishlist into the
+//     user’s shopping cart
+
+// 6.4 Must be able to list the book’s in a user’s wishlist
+
+// ----------------------------------------------------------------------------------
+
 // ------------------------------ Feature 4 ---------------------------------------
 
 // 4.1 An administrator must be able to create a book with the book ISBN, book
