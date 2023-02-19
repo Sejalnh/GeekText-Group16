@@ -2,6 +2,7 @@ const express = require("express");
 const dotenv = require("dotenv").config(); // TODO: ADD .env for PRODUCTION
 const mongoose = require("mongoose");
 const Books = require("./models/booksModel");
+const Wishlist = require("./models/wishlistModel");
 const cors = require("cors");
 
 // TODO: move into .env for PRODUCTION
