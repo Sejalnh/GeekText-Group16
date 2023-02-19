@@ -2,7 +2,6 @@ const express = require("express");
 const dotenv = require("dotenv").config(); // TODO: ADD .env for PRODUCTION
 const mongoose = require("mongoose");
 const Books = require("./models/booksModel");
-const Wishlist = require("./models/wishlistModel");
 const cors = require("cors");
 
 // TODO: move into .env for PRODUCTION
@@ -12,14 +11,15 @@ const MONGO_URI =
 
 const options = {
   useNewUrlParser: true,
-  useUnifiedTopology: true,
+  useUnifiedTopology: true
 };
 
 // START THE APP
 const app = express();
 
 // MIDDLE-WARE
-app.use(express.urlencoded()); // ensure we can parse the URL parameters correctly
+app.use(express.json());
+app.use(express.urlencoded({ extended: true })); // ensure we can parse the URL parameters correctly
 app.use(cors());
 
 // CONNECT TO DATABASE
@@ -28,35 +28,6 @@ mongoose.connect(MONGO_URI, { useNewUrlParser: true }, () =>
 );
 
 // ROUTES
-
-// ------------------------------ Feature 6 ---------------------------------------
-// 6.1 Must be able to create a wishlist of books that belongs to user and 
-//     has a unique name 
-app.post ("/wishlist/create", async (request, response) => {
-  const { name, userId, items } = req.body; 
-  const wish = new Wishlist ({
-    name, 
-    userId, 
-    items
-  })
-
-  try {
-    wish = await wish.save();
-    response.status(200).json(wish);
-  } catch (error) {
-    response.status(400).json({message : error});
-  }
-});
-
-// 6.2 Must be able to add a book to a user’s wishlisht 
-
-// 6.3 Must be able to remove a book from a user’s wishlist into the 
-//     user’s shopping cart 
-
-// 6.4 Must be able to list the book’s in a user’s wishlist 
-
-// ----------------------------------------------------------------------------------
-
 // ------------------------------ Feature 1 ---------------------------------------
 // 1.1 Retrieve List of Books by Genre
 app.get("/books/genre/:genre", async (request, response) => {

@@ -1,6 +1,7 @@
 [
   {
     "title": "Moby-Dick",
+    "ISBN": 321543254,
     "author": "Herman Melville",
     "genre": "Epic",
     "copiesSold": 12715,
@@ -10,6 +11,7 @@
   },
   {
     "title": "Little Women",
+    "ISBN": 321543333,
     "author": "L.M Alcott",
     "genre": "Comedy",
     "copiesSold": 100456,
@@ -19,6 +21,7 @@
   },
   {
     "title": "It",
+    "ISBN": 321543444,
     "author": "Stephen King",
     "genre": "Thriller",
     "copiesSold": 124685,
@@ -28,6 +31,7 @@
   },
   {
     "title": "Song of Achilles",
+    "ISBN": 321543555,
     "author": "Madeline Miller",
     "genre": "Romance",
     "copiesSold": 203789,
@@ -37,6 +41,7 @@
   },
   {
     "title": "Fairy Tale",
+    "ISBN": 321543666,
     "author": "Stephen King",
     "genre": "Thriller",
     "copiesSold": 98344,
@@ -46,6 +51,7 @@
   },
   {
     "title": "Chainsaw Man Vol. 1",
+    "ISBN": 321543777,
     "author": "Taksuki Fujimoto",
     "genre": "Manga",
     "copiesSold": 56478,
@@ -55,6 +61,7 @@
   },
   {
     "title": "Spare",
+    "ISBN": 321543888,
     "author": "Prince Harry",
     "genre": "Autobiography",
     "copiesSold": 302456,
@@ -64,6 +71,7 @@
   },
   {
     "title": "The Mayfair Witches",
+    "ISBN": 321543999,
     "author": "Anne Rice",
     "genre": "Mystery",
     "copiesSold": 45678,
@@ -73,6 +81,7 @@
   },
   {
     "title": "The Pasta Queen: A Just Gorgeous Cookbook",
+    "ISBN": 321543111,
     "author": "Nadia Caterina Munno",
     "genre": "Cookbooks",
     "copiesSold": 32456,
@@ -82,6 +91,7 @@
   },
   {
     "title": "Enemy Pie",
+    "ISBN": 321542222,
     "author": "Derek Munson",
     "genre": "Children’s",
     "copiesSold": 12567,

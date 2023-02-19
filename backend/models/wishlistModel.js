@@ -6,10 +6,6 @@ const wishlistModel = mongoose.Schema({
     required: true,
     trim: true
   },
-  userId: {
-    type:String, 
-    required: true,
-  },
   items: {
     type: String, 
     required: true
