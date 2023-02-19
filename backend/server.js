@@ -23,7 +23,6 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // ensure we can parse the URL parameters correctly
 app.use(cors());
-app.use(express.json());
 
 // CONNECT TO DATABASE
 mongoose.connect(MONGO_URI, { useNewUrlParser: true }, () =>
@@ -37,8 +36,20 @@ mongoose.connect(MONGO_URI, { useNewUrlParser: true }, () =>
 //    name, book description, price, author, genre, publisher , year published and
 //    copies sold. POST
 app.post("/books/create", async (request, response) => {
-  const { title, ISBN, author, genre, copiesSold, rating, publisher, price } =
-    request.body;
+  const {
+    title,
+    ISBN,
+    author,
+    genre,
+    copiesSold,
+    rating,
+    publisher,
+    price,
+    description,
+    yearPublished,
+    ratings,
+    comments
+  } = request.body;
 
   const books = new Books({
     title,
@@ -48,13 +59,17 @@ app.post("/books/create", async (request, response) => {
     copiesSold,
     rating,
     publisher,
-    price
+    price,
+    description,
+    yearPublished,
+    ratings,
+    comments
   });
 
   try {
-    books = await books.save();
+    await books.save();
     //response.status(200).json(books);
-    response.status(200).send(books);
+    response.status(200).send("Book added!");
   } catch (error) {
     response.status(404).send(error.message);
   }
@@ -73,6 +88,23 @@ app.get("/books/ISBN/:ISBN", async (request, response) => {
 });
 // 4.3 An administrator must be able to create an author with first name, last
 //     name, biography and publisher POST
+app.post("/authors/create", async (request, response) => {
+  const { firstname, lastname, biography, publisher } = request.body;
+
+  const author = new Author({
+    firstname,
+    lastname,
+    biography,
+    publisher
+  });
+
+  try {
+    await author.save();
+    response.status(200).send("Author added!");
+  } catch (error) {
+    response.status(404).send(error.message);
+  }
+});
 
 // 4.4 Must be able to retrieve a list of books associated with an author GET
 app.get("/books/author/:author", async (request, response) => {

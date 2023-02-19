@@ -42,10 +42,6 @@ const booksSchema = mongoose.Schema({
     required: true,
     trim: true
   },
-  ISBN: {
-    type: Number,
-    required: true,
-  },
   author: {
     type: String,
     required: true,
