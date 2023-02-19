@@ -29,8 +29,8 @@ mongoose.connect(MONGO_URI, { useNewUrlParser: true }, () =>
 // ROUTES
 // ------------------------------ Feature 4 ---------------------------------------
 
-// 4.1 An administrator must be able to create a book with the book ISBN, book 
-//    name, book description, price, author, genre, publisher , year published and 
+// 4.1 An administrator must be able to create a book with the book ISBN, book
+//    name, book description, price, author, genre, publisher , year published and
 //    copies sold. POST
 app.post("/books/create", async (request, response) => {
   const { title, ISBN, author, genre, copiesSold, rating, publisher, price } = request.body;
@@ -40,14 +40,14 @@ app.post("/books/create", async (request, response) => {
   });
 
   try {
-   books = await books.save();
+    books = await books.save();
     //response.status(200).json(books);
     response.send(books);
   } catch(error){
     response.status(404).send(error.message);
     console.log(error.message);
   }
-  });
+});
 
   
 // 4.2 Must be able retrieve a book’s details by the ISBN GET
@@ -61,7 +61,7 @@ app.get("/books/ISBN/:ISBN", async (request, response) => {
     response.status(404).json({ message: error });
   }
 });
-// 4.3 An administrator must be able to create an author with first name, last 
+// 4.3 An administrator must be able to create an author with first name, last
 //     name, biography and publisher POST
 
 // 4.4 Must be able to retrieve a list of books associated with an author GET
