@@ -6,10 +6,11 @@ const wishlistModel = mongoose.Schema({
     required: true,
     trim: true
   },
-  items: {
-    type: String, 
+  username: {
+    type: String,
     required: true
-  }
+  },
+  items: [String]
 });
 
 module.exports = mongoose.model("Wishlist", wishlistModel);
