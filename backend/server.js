@@ -119,28 +119,7 @@ app.get("/books/author/:author", async (request, response) => {
 });
 // -------------------------------------------------------------------------------
 
-// ------------------------------- Test -----------------------------------------
-// "/books" returns all books within the database
-app.get("/books", async (request, response) => {
-  try {
-    const books = await Books.find(); // wait for books to be retrieved ASYNCHRONOUSLY
-    response.status(200).json(books);
-  } catch (error) {
-    response.status(404).json({ message: error });
-  }
-});
-
-// "/books/isbn/ISBN_NUMBER" returns the book with specified ISBN
-app.get("/books/isbn/:isbn", async (req, res) => {
-  const isbn = parseInt(req.params.isbn);
-
-  try {
-    const book = await Books.find({ ISBN: isbn });
-    res.status(200).json(book);
-  } catch (error) {
-    res.status(404).json({ message: error });
-  }
-});
+// ------------------------------ Feature 2 --------------------------------------
 
 // "/users" returns all users within the database
 app.get("/users", async (req, res) => {
@@ -159,6 +138,31 @@ app.get("/users/username/:username", async (req, res) => {
   try {
     const user = await User.find({ username });
     res.status(200).json(user);
+  } catch (error) {
+    res.status(404).json({ message: error });
+  }
+});
+
+// -------------------------------------------------------------------------------
+
+// ------------------------------- Test -----------------------------------------
+// "/books" returns all books within the database
+app.get("/books", async (request, response) => {
+  try {
+    const books = await Books.find(); // wait for books to be retrieved ASYNCHRONOUSLY
+    response.status(200).json(books);
+  } catch (error) {
+    response.status(404).json({ message: error });
+  }
+});
+
+// "/books/isbn/ISBN_NUMBER" returns the book with specified ISBN
+app.get("/books/isbn/:isbn", async (req, res) => {
+  const isbn = parseInt(req.params.isbn);
+
+  try {
+    const book = await Books.find({ ISBN: isbn });
+    res.status(200).json(book);
   } catch (error) {
     res.status(404).json({ message: error });
   }
