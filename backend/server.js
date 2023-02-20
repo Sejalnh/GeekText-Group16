@@ -28,11 +28,11 @@ mongoose.connect(MONGO_URI, { useNewUrlParser: true }, () =>
   console.log(`MongoDB connected...`)
 );
 
-// CONTROLLERS
+// CONTROLLERS/ROUTERS
 app.use("/browser", BookBrowsingController); // Feature 1
 app.use("/details", BookDetailsController); // Feature 4
 
-// ------------------------------- TEST ROUTES -----------------------------------------
+// ------------------------------- DATABASE TEST ROUTES ---------------------------------
 // "/books" returns all books within the database
 app.get("/books", async (request, response) => {
   try {
