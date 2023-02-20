@@ -142,7 +142,7 @@ app.get("/books/isbn/:isbn", async (req, res) => {
   }
 });
 
-// "/users" returns all books within the database
+// "/users" returns all users within the database
 app.get("/users", async (req, res) => {
   try {
     const users = await User.find();
