@@ -81,7 +81,7 @@ const userSchema = mongoose.Schema({
   wishlist: {
     type: Map,
     of: [String],
-    required: true
+    required: false
   },
   creditCards: [creditCardSchema],
   shoppingCart: [String]
