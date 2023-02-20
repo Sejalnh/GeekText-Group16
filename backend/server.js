@@ -151,7 +151,7 @@ app.post("/users/create", async (req, res) => {
     await user.save();
     res.status(201).send("User added!");
   } catch (error) {
-    res.status(400).json({ message: error });
+    res.status(404).json({ message: error });
   }
 });
 
