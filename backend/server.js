@@ -121,6 +121,40 @@ app.get("/books/author/:author", async (request, response) => {
 
 // ------------------------------ Feature 2 --------------------------------------
 
+// Create a User with username, password and optional fields(name, email and home address)
+app.post("/users/create", async (req, res) => {
+  const {
+    username,
+    password,
+    passwordConfirm,
+    name,
+    email,
+    homeAddress,
+    creditCards,
+    wishList,
+    shoppingCart
+  } = req.body;
+
+  const user = new User({
+    username,
+    password,
+    passwordConfirm,
+    name,
+    email,
+    homeAddress,
+    creditCards,
+    wishList,
+    shoppingCart
+  });
+
+  try {
+    await user.save();
+    res.status(201).send("User added!");
+  } catch (error) {
+    res.status(400).json({ message: error });
+  }
+});
+
 // "/users" returns all users within the database
 app.get("/users", async (req, res) => {
   try {
