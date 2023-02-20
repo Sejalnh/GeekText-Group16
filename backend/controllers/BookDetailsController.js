@@ -3,7 +3,9 @@ const router = express.Router();
 const Books = require("../models/booksModel");
 const Author = require("../models/authorModel");
 
+// Users can see informative and enticing details about a book
 class BookDetailsController {
+  // 4.1 An administrator must be able to create a book with the book ISBN, book name, book description, price, author, genre, publisher , year published and copies sold.
   static createBook = async (req, res) => {
     const {
       title,
@@ -43,6 +45,7 @@ class BookDetailsController {
     }
   };
 
+  // 4.2 Must be able retrieve a book’s details by the ISBN
   static getByISBN = async (req, res) => {
     const ISBN = req.params.ISBN; // retrieve the genre from the URL
 
@@ -54,6 +57,7 @@ class BookDetailsController {
     }
   };
 
+  // 4.3 An administrator must be able to create an author with first name, last name, biography and publisher
   static createAuthor = async (req, res) => {
     const { firstname, lastname, biography, publisher } = req.body;
 
@@ -72,6 +76,7 @@ class BookDetailsController {
     }
   };
 
+  // 4.4 Must be able to retrieve a list of books associated with an author
   static getByAuthor = async (req, res) => {
     const author = req.params.author; // retrieve the genre from the URL
 

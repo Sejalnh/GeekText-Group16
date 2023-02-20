@@ -2,18 +2,21 @@ const express = require("express");
 const router = express.Router();
 const Books = require("../models/booksModel");
 
+// Users will have a simple and enjoyable way to discover new books and Authors and sort results.
 class BookBrowsingController {
+  // 1.1 Retrieve List of Books by Genre
   static getByGenre = async (req, res) => {
-    const genre = req.params.genre; // retrieve the genre from the URL
+    const genre = req.params.genre;
 
     try {
-      const books = await Books.find({ genre }); // wait for books to be retrieved ASYNCHRONOUSLY
+      const books = await Books.find({ genre });
       res.status(200).json(books);
     } catch (error) {
       res.status(404).json({ message: error });
     }
   };
 
+  // 1.2 Retrieve List of Top Sellers (Top 10 books that have sold the most copied)
   static getTopTen = async (req, res) => {
     try {
       const books = await Books.find().sort({ copiesSold: -1 }).limit(10);
@@ -23,6 +26,7 @@ class BookBrowsingController {
     }
   };
 
+  // 1.3 Retrieve List of Books for a particular rating and higher
   static getByRating = async (req, res) => {
     const rating_param = parseFloat(req.params.rating);
 
@@ -34,6 +38,7 @@ class BookBrowsingController {
     }
   };
 
+  // 1.4 Discount books by publisher.
   static applyDiscount = async (req, res) => {
     const percentDiscount = 1.0 - parseFloat(req.body.percentDiscount) / 100.0;
     const publisher_param = req.body.publisher;
