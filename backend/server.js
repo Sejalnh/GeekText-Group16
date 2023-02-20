@@ -8,7 +8,7 @@ const cors = require("cors");
 
 // CONTROLLERS
 const BookBrowsingController = require("./controllers/BookBrowsingController");
-const ProfileManagementController = require("./controllers/ProfileManagementController");
+const BookDetailsController = require("./controllers/BookDetailsController");
 
 // TODO: move into .env for PRODUCTION
 const PORT = 3000;
@@ -30,10 +30,9 @@ mongoose.connect(MONGO_URI, { useNewUrlParser: true }, () =>
 
 // CONTROLLERS
 app.use("/browser", BookBrowsingController); // Feature 1
-app.use("/profiles", ProfileManagementController); // Feature 4
+app.use("/details", BookDetailsController); // Feature 4
 
-// ROUTES
-// ------------------------------- Test -----------------------------------------
+// ------------------------------- TEST ROUTES -----------------------------------------
 // "/books" returns all books within the database
 app.get("/books", async (request, response) => {
   try {
@@ -44,35 +43,11 @@ app.get("/books", async (request, response) => {
   }
 });
 
-// "/books/isbn/ISBN_NUMBER" returns the book with specified ISBN
-app.get("/books/isbn/:isbn", async (req, res) => {
-  const isbn = parseInt(req.params.isbn);
-
-  try {
-    const book = await Books.find({ ISBN: isbn });
-    res.status(200).json(book);
-  } catch (error) {
-    res.status(404).json({ message: error });
-  }
-});
-
 // "/users" returns all books within the database
 app.get("/users", async (req, res) => {
   try {
     const users = await User.find();
     res.status(200).json(users);
-  } catch (error) {
-    res.status(404).json({ message: error });
-  }
-});
-
-// "/users/username/USERNAME" returns the user with specified username
-app.get("/users/username/:username", async (req, res) => {
-  const username = req.params.username;
-
-  try {
-    const user = await User.find({ username });
-    res.status(200).json(user);
   } catch (error) {
     res.status(404).json({ message: error });
   }
@@ -87,20 +62,6 @@ app.get("/authors", async (req, res) => {
     res.status(404).json({ message: error });
   }
 });
-
-// "/authors/id/AUTHOR_ID" returns the user with specified _id
-app.get("/authors/id/:authorID", async (req, res) => {
-  const authorID = req.params.authorID;
-  if (!mongoose.Types.ObjectId.isValid(authorID))
-    return res.status(404).json({ message: `No author with id: ${authorID}` });
-
-  try {
-    const author = await Author.findById(authorID);
-    res.status(200).json(author);
-  } catch (error) {
-    res.status(404).json({ message: error });
-  }
-});
-// -------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}...`));
