@@ -3,7 +3,7 @@ const router = express.Router();
 const Books = require("../models/booksModel");
 const Author = require("../models/authorModel");
 
-class ProfileManagementController {
+class BookDetailsController {
   static createBook = async (req, res) => {
     const {
       title,
@@ -85,9 +85,9 @@ class ProfileManagementController {
 }
 
 // routes
-router.post("/books/create", ProfileManagementController.createBook);
-router.get("/books/ISBN/:ISBN", ProfileManagementController.getByISBN);
-router.post("/authors/create", ProfileManagementController.createAuthor);
-router.get("/authors/:author", ProfileManagementController.getByAuthor);
+router.post("/books/create", BookDetailsController.createBook);
+router.get("/books/ISBN/:ISBN", BookDetailsController.getByISBN);
+router.post("/authors/create", BookDetailsController.createAuthor);
+router.get("/authors/:author", BookDetailsController.getByAuthor);
 
 module.exports = router;
