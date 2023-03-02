@@ -204,7 +204,7 @@ app.post("/users/username/:username/shoppingCart/add/:ISBN",async(req, res)=>{
   const newBook= req.params.ISBN;
 
   try{
-   const shoppingCart= await User.findOneAndUpdate({username},{$push:{"shoppingCart":newBook}})
+   const shoppingCart= await User.findOneAndUpdate({username},{$push:{shoppingCart:newBook}})
     res.status(200).json(shoppingCart);
   }catch(error) {
     res.status(404).json({message: error});
