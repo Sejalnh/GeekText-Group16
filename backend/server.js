@@ -207,7 +207,7 @@ app.post("/users/username/:username/shoppingCart/add/:ISBN",async(req, res)=>{
    const shoppingCart= await User.findOneAndUpdate({username},{$push:{"shoppingCart":newBook}})
     res.status(200).json(shoppingCart);
   }catch(error) {
-    res.status(404).json({message: 'Did not work'});
+    res.status(404).json({message: error});
   }
 
 
@@ -215,6 +215,19 @@ app.post("/users/username/:username/shoppingCart/add/:ISBN",async(req, res)=>{
 // 3.3 Retrieve the list of book(s) in the user’s shopping cart. 
 
 // 3.4 Delete a book from the shopping cart instance for that user.
-
+app.delete("/users/username/:username/shoppingCart/remove/:ISBN",async(req,res)=>{
+  const username= req.params.username;
+  const newBook= req.params.ISBN;
+  
+  
+  try{
+   const shoppingCart= await User.findOneAndUpdate({username},{$pull:{shoppingCart:newBook}})
+   res.status(200).json(shoppingCart);
+  }catch(error) {
+    res.status(404).json({message: error});
+  }
+  
+  
+  })
 // ----------------------------------------------------------------------------------
 app.listen(PORT, () => console.log(`Server started on port ${PORT}...`));
