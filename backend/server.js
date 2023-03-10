@@ -56,6 +56,25 @@ app.post("/wishlists/create", async (req, res) => {
 
 // 6.4 Must be able to list the book’s in a user’s wishlist
 
+app.get("/wishlist/view/:userId/:wishlistName", async (req, res) => {
+  const userId = req.params.userId;
+  const wishlistName = req.params.wishlistName; 
+
+  if (!mongoose.Types.ObjectId.isValid(userId))
+    return res.status(404).json({message: 'No user with id: ${userId}'});
+
+
+  if (!mongoose.Types.ObjectId.isValid(wishlistName))
+    return res.status(404).json({message: 'No wishlist named: ${userId}'});
+
+  try {
+    const author = await Author.findById(authorID);
+    res.status(200).json(author);
+  } catch (error) {
+    res.status(404).json({ message: error });
+  }
+});
+
 // ----------------------------------------------------------------------------------
 
 // ------------------------------ Feature 4 ---------------------------------------
