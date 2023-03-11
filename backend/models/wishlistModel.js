@@ -10,7 +10,13 @@ const wishlistModel = mongoose.Schema({
     type: String,
     required: true
   },
-  items: [String]
+  items: [{
+    bookId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Book',
+      required: true
+    }
+  }]
 });
 
 module.exports = mongoose.model("Wishlist", wishlistModel);

@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const Books = require("./models/booksModel");
 const cors = require("cors");
 const Wishlist = require("./models/wishlistModel");
+const User = require("./models/userModel");
 
 // TODO: move into .env for PRODUCTION
 const PORT = 3000;
@@ -32,6 +33,7 @@ mongoose.connect(MONGO_URI, { useNewUrlParser: true }, () =>
 // ------------------------------ Feature 6 ---------------------------------------
 // 6.1 Must be able to create a wishlist of books that belongs to user and
 //     has a unique name
+
 app.post("/wishlists/create", async (req, res) => {
   const { name, username, items } = req.body;
 
@@ -49,7 +51,25 @@ app.post("/wishlists/create", async (req, res) => {
   }
 });
 
-// 6.2 Must be able to add a book to a user’s wishlisht
+// 6.2 Must be able to add a book to a user’s wishlist
+
+app.post("/wishlists/add-book/:wishlistId/:bookId", async (req, res) => {
+  const wishlistId = req.params.wishlistId;
+  const bookId = req.params.bookId;
+
+  try {
+    // Find the wishlist and update it with the new book if it doesn't already exist
+    const wishlist = await Wishlist.findOneAndUpdate(
+      { _id: wishlistId },
+      { $addToSet: { items: { bookId } } },
+      { new: true, upsert: true }
+    );
+
+    res.status(200).json({ message: 'Book added to wishlist' });
+  } catch (error) {
+    res.status(400).json({ message : error });
+  }
+});
 
 // 6.3 Must be able to remove a book from a user’s wishlist into the
 //     user’s shopping cart
