@@ -56,24 +56,18 @@ app.post("/wishlists/create", async (req, res) => {
 
 // 6.4 Must be able to list the book’s in a user’s wishlist
 
-app.get("/wishlist/view/:userId/:wishlistName", async (req, res) => {
-  const userId = req.params.userId;
-  const wishlistName = req.params.wishlistName; 
-
-  if (!mongoose.Types.ObjectId.isValid(userId))
-    return res.status(404).json({message: 'No user with id: ${userId}'});
-
-
-  if (!mongoose.Types.ObjectId.isValid(wishlistName))
-    return res.status(404).json({message: 'No wishlist named: ${userId}'});
+app.get("/wishlists/view/:name", async (req, res) => {
+  const name = req.params.name; 
 
   try {
-    const author = await Author.findById(authorID);
-    res.status(200).json(author);
+    const wishlist = await Wishlist.find({ name }); 
+    res.status(200).json(wishlist);
   } catch (error) {
-    res.status(404).json({ message: error });
+    res.status(404).json({ message : error });
   }
 });
+
+// Test to get all wishlist: 
 
 // ----------------------------------------------------------------------------------
 
@@ -133,6 +127,7 @@ app.get("/books/ISBN/:ISBN", async (request, response) => {
     response.status(404).json({ message: error });
   }
 });
+
 // 4.3 An administrator must be able to create an author with first name, last
 //     name, biography and publisher POST
 app.post("/authors/create", async (request, response) => {
