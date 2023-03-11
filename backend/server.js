@@ -201,11 +201,21 @@ app.use("/browser", BookBrowsingController); // Feature 1
 // 3.2 Add a book to the shopping cart. 
 app.post("/users/username/:username/shoppingCart/add/:ISBN",async(req, res)=>{
   const username= req.params.username;
-  const newBook= req.params.ISBN;
-
+  const newISBN= req.params.ISBN;
+  
+  
   try{
-   const shoppingCart= await User.findOneAndUpdate({username},{$push:{shoppingCart:newBook}})
-    res.status(200).json(shoppingCart);
+    const test1= await Books.exists({ISBN:newISBN});
+    
+    if(!test1){
+
+      return res.status(404).json({ message: `No such ISBN: ${newISBN}` });
+  }else{
+
+   const shoppingCart= await User.findOneAndUpdate({username},{$push:{shoppingCart:newISBN}})
+    res.status(200).json({ message:shoppingCart});
+  }
+
   }catch(error) {
     res.status(404).json({message: error});
   }
@@ -217,13 +227,23 @@ app.post("/users/username/:username/shoppingCart/add/:ISBN",async(req, res)=>{
 // 3.4 Delete a book from the shopping cart instance for that user.
 app.delete("/users/username/:username/shoppingCart/remove/:ISBN",async(req,res)=>{
   const username= req.params.username;
-  const newBook= req.params.ISBN;
-  
-  
+  const newISBN= req.params.ISBN;
+
   try{
-   const shoppingCart= await User.findOneAndUpdate({username},{$pull:{shoppingCart:newBook}})
-   res.status(200).json(shoppingCart);
+    const test1= await Books.exists({ISBN:newISBN});
+
+    if(!test1){
+
+      return res.status(404).json({ message: `No such ISBN: ${newISBN}` });
+    }else{
+
+      const shoppingCart= await User.findOneAndUpdate({username},{$pull:{shoppingCart:newISBN}})
+
+      res.status(200).json(shoppingCart);
+    }
+
   }catch(error) {
+
     res.status(404).json({message: error});
   }
   
