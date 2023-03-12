@@ -2,11 +2,12 @@ const express = require("express");
 const dotenv = require("dotenv").config(); // TODO: ADD .env for PRODUCTION
 const mongoose = require("mongoose");
 const Books = require("./models/booksModel");
-const User = require("./models/userModel");
+//const User = require("./models/userModel");
 const Author = require("./models/authorModel");
 const cors = require("cors");
 
 const BookBrowsingController = require("./controllers/BookBrowsingController");
+const userController = require('./controllers/userController');
 
 // TODO: move into .env for PRODUCTION
 const PORT = 3000;
@@ -124,7 +125,7 @@ app.get("/books/author/:author", async (request, response) => {
 // ------------------------------ Feature 2 --------------------------------------
 
 // Create a User with username, password and optional fields(name, email and home address)
-app.post("/users/create", async (req, res) => {
+/*app.post("/users/create", async (req, res) => {
   const {
     username,
     password,
@@ -178,7 +179,7 @@ app.get("/users/username/:username", async (req, res) => {
     res.status(404).json({ message: error });
   }
 });
-
+*/
 // -------------------------------------------------------------------------------
 
 // ------------------------------- Test -----------------------------------------
@@ -227,6 +228,10 @@ app.get("/authors/id/:authorID", async (req, res) => {
     res.status(404).json({ message: error });
   }
 });
+// -------------------------------------------------------------------------------
+
+// -------------------------------------------------------------------------------
+app.use("/", userController); // Feature 2
 // -------------------------------------------------------------------------------
 
 // ------------------------------ Feature 1 ---------------------------------------
