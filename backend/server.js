@@ -199,7 +199,7 @@ app.use("/browser", BookBrowsingController); // Feature 1
 // 3.1 Retrieve the subtotal price of all items in the user’s shopping cart. 
 
 // 3.2 Add a book to the shopping cart. 
-app.post("/users/username/:username/shoppingCart/add/:ISBN",async(req, res)=>{
+app.post("/shoppingCart/:username/add/:ISBN",async(req, res)=>{
   const username= req.params.username;
   const newISBN= req.params.ISBN;
   
@@ -225,7 +225,7 @@ app.post("/users/username/:username/shoppingCart/add/:ISBN",async(req, res)=>{
 // 3.3 Retrieve the list of book(s) in the user’s shopping cart. 
 
 // 3.4 Delete a book from the shopping cart instance for that user.
-app.delete("/users/username/:username/shoppingCart/remove/:ISBN",async(req,res)=>{
+app.delete("/shoppingCart/:username/remove/:ISBN",async(req,res)=>{
   const username= req.params.username;
   const newISBN= req.params.ISBN;
 
