@@ -25,10 +25,23 @@ class BookBrowsingController {
       res.status(404).json({ message: error });
     }
   };
+
+  // 1.3 Retrieve List of Books for a particular rating and higher
+  static getByRating = async (req, res) => {
+    const rating_param = parseFloat(req.params.rating);
+
+    try {
+      const books = await Books.find({ rating: { $gte: rating_param } });
+      res.status(200).json(books);
+    } catch (error) {
+      res.status(404).json({ message: error });
+    }
+  };
 }
 
 // routes
 router.get("/books/genre/:genre", BookBrowsingController.getByGenre);
 router.get("/books/top10", BookBrowsingController.getTopTen);
+router.get("/books/rating/:rating", BookBrowsingController.getByRating);
 
 module.exports = router;
