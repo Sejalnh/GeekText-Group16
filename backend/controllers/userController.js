@@ -123,10 +123,10 @@ static updateMe = async (req, res) => {
 }
 
 // Routes
-router.get("/users", userController.getAllUsers);
-router.post('/users/create', userController.createUser);
-router.get('/users/username/:username', userController.getUser);
-router.patch('/users/updateuser/:username', userController.updateUser); //.delete(userController.deleteUser);
+router.get("/", userController.getAllUsers);
+router.post('/create', userController.createUser);
+router.get('/username/:username', userController.getUser);
+router.patch('/updateuser/:username', userController.updateUser); //.delete(userController.deleteUser);
 //router.patch('/users/updateMe', userController.updateMe);
 
 module.exports = router;
