@@ -81,7 +81,7 @@ const userSchema = mongoose.Schema({
   wishlist: {
     type: Map,
     of: [String],
-    required: true
+    required: false
   },
   creditCards: [creditCardSchema],
   shoppingCart: [String]
@@ -96,6 +96,12 @@ userSchema.pre("save", async function (next) {
 
   //Delete passwordCOnfirm filed
   this.passwordConfirm = undefined;
+  next();
+});
+
+userSchema.pre(/^find/, function(next) {
+  // this points to the current query
+  this.find({ active: { $ne: false } });
   next();
 });
 

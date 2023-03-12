@@ -2,11 +2,12 @@ const express = require("express");
 const dotenv = require("dotenv").config(); // TODO: ADD .env for PRODUCTION
 const mongoose = require("mongoose");
 const Books = require("./models/booksModel");
-const User = require("./models/userModel");
+//const User = require("./models/userModel");
 const Author = require("./models/authorModel");
 const cors = require("cors");
 
 const BookBrowsingController = require("./controllers/BookBrowsingController");
+const userController = require('./controllers/userController');
 
 // TODO: move into .env for PRODUCTION
 const PORT = 3000;
@@ -121,6 +122,66 @@ app.get("/books/author/:author", async (request, response) => {
 });
 // -------------------------------------------------------------------------------
 
+// ------------------------------ Feature 2 --------------------------------------
+
+// Create a User with username, password and optional fields(name, email and home address)
+/*app.post("/users/create", async (req, res) => {
+  const {
+    username,
+    password,
+    passwordConfirm,
+    name,
+    email,
+    homeAddress,
+    creditCards,
+    wishList,
+    shoppingCart
+  } = req.body;
+
+  const user = new User({
+    username,
+    password,
+    passwordConfirm,
+    name,
+    email,
+    homeAddress,
+    creditCards,
+    wishList,
+    shoppingCart
+  });
+
+  try {
+    await user.save();
+    res.status(201).send("User added!");
+  } catch (error) {
+    res.status(404).json({ message: error });
+  }
+});
+
+// "/users" returns all users within the database
+app.get("/users", async (req, res) => {
+  try {
+    const users = await User.find();
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(404).json({ message: error });
+  }
+});
+
+// "/users/username/USERNAME" returns the user with specified username
+app.get("/users/username/:username", async (req, res) => {
+  const username = req.params.username;
+
+  try {
+    const user = await User.find({ username });
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(404).json({ message: error });
+  }
+});
+*/
+// -------------------------------------------------------------------------------
+
 // ------------------------------- Test -----------------------------------------
 // "/books" returns all books within the database
 app.get("/books", async (request, response) => {
@@ -139,28 +200,6 @@ app.get("/books/isbn/:isbn", async (req, res) => {
   try {
     const book = await Books.find({ ISBN: isbn });
     res.status(200).json(book);
-  } catch (error) {
-    res.status(404).json({ message: error });
-  }
-});
-
-// "/users" returns all books within the database
-app.get("/users", async (req, res) => {
-  try {
-    const users = await User.find();
-    res.status(200).json(users);
-  } catch (error) {
-    res.status(404).json({ message: error });
-  }
-});
-
-// "/users/username/USERNAME" returns the user with specified username
-app.get("/users/username/:username", async (req, res) => {
-  const username = req.params.username;
-
-  try {
-    const user = await User.find({ username });
-    res.status(200).json(user);
   } catch (error) {
     res.status(404).json({ message: error });
   }
@@ -189,6 +228,10 @@ app.get("/authors/id/:authorID", async (req, res) => {
     res.status(404).json({ message: error });
   }
 });
+// -------------------------------------------------------------------------------
+
+// -------------------------------------------------------------------------------
+app.use("/", userController); // Feature 2
 // -------------------------------------------------------------------------------
 
 // ------------------------------ Feature 1 ---------------------------------------
