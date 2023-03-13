@@ -1,41 +1,6 @@
 const mongoose = require("mongoose");
-
-const ratingSchema = mongoose.Schema({
-  username: {
-    type: String,
-    required: true
-  },
-  rating: {
-    type: Number,
-    required: true,
-    min: 0,
-    max: 5
-  },
-  datestamp: {
-    type: Date,
-    default: Date.now,
-    required: true
-  }
-});
-
-const commentSchema = mongoose.Schema({
-  username: {
-    type: String,
-    required: true
-  },
-  comment: {
-    type: String,
-    default: "No comment was left.",
-    required: true,
-    trim: true
-  },
-  datestamp: {
-    type: Date,
-    default: Date.now,
-    required: true
-  }
-});
-
+const {ratingSchema}=require('./ratingSchema')
+const {commentSchema}=require('./commentSchema')
 const booksSchema = mongoose.Schema({
   title: {
     type: String,

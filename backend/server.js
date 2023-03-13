@@ -8,7 +8,8 @@ const cors = require("cors");
 
 const BookBrowsingController = require("./controllers/BookBrowsingController");
 const BookDetailsController = require("./controllers/BookDetailsController");
-
+const BookCommentController=require('./controllers/BookCommentController');
+const BookRatingController=require('./controllers/BookRatingController');
 // TODO: move into .env for PRODUCTION
 const PORT = 3000;
 const MONGO_URI =
@@ -109,6 +110,10 @@ app.use("/browser", BookBrowsingController); // Feature 1
 
 // ------------------------------ Feature 4 ---------------------------------------
 app.use("/books", BookDetailsController); // Feature 4
+// ----------------------------------------------------------------------------------
+// ------------------------------ Feature5---------------------------------------
+app.use("/books-comment", BookCommentController); // Feature 5
+app.use("/books-rating", BookRatingController); // Feature 5
 // ----------------------------------------------------------------------------------
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}...`));
