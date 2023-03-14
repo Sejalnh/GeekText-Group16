@@ -122,66 +122,6 @@ app.get("/books/author/:author", async (request, response) => {
 });
 // -------------------------------------------------------------------------------
 
-// ------------------------------ Feature 2 --------------------------------------
-
-// Create a User with username, password and optional fields(name, email and home address)
-/*app.post("/users/create", async (req, res) => {
-  const {
-    username,
-    password,
-    passwordConfirm,
-    name,
-    email,
-    homeAddress,
-    creditCards,
-    wishList,
-    shoppingCart
-  } = req.body;
-
-  const user = new User({
-    username,
-    password,
-    passwordConfirm,
-    name,
-    email,
-    homeAddress,
-    creditCards,
-    wishList,
-    shoppingCart
-  });
-
-  try {
-    await user.save();
-    res.status(201).send("User added!");
-  } catch (error) {
-    res.status(404).json({ message: error });
-  }
-});
-
-// "/users" returns all users within the database
-app.get("/users", async (req, res) => {
-  try {
-    const users = await User.find();
-    res.status(200).json(users);
-  } catch (error) {
-    res.status(404).json({ message: error });
-  }
-});
-
-// "/users/username/USERNAME" returns the user with specified username
-app.get("/users/username/:username", async (req, res) => {
-  const username = req.params.username;
-
-  try {
-    const user = await User.find({ username });
-    res.status(200).json(user);
-  } catch (error) {
-    res.status(404).json({ message: error });
-  }
-});
-*/
-// -------------------------------------------------------------------------------
-
 // ------------------------------- Test -----------------------------------------
 // "/books" returns all books within the database
 app.get("/books", async (request, response) => {
