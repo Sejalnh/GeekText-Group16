@@ -10,6 +10,7 @@ const BookBrowsingController = require("./controllers/BookBrowsingController");
 const userController = require('./controllers/userController');
 
 // TODO: move into .env for PRODUCTION
+mongoose.set("strictQuery", false);
 const PORT = 3000;
 const MONGO_URI =
   "mongodb+srv://admin1:1234@cluster0.qngmqvw.mongodb.net/GeekTextDB?retryWrites=true&w=majority";
