@@ -2,20 +2,11 @@ const express = require('express');
 const router = express.Router();
 const User = require('./../models/userModel');
 
-// Automate try / catch blocks
+// Automate try/catch blocks in Features
 const catchAsync = fn => {
   return (req, res, next) => {
     fn(req, res, next).catch(next);
   };
-};
-
-// REMOVE ME MAYBE
-const filterObj = (obj, ...allowedFields) => {
-  const newObj = {};
-  Object.keys(obj).forEach(el => {
-    if (allowedFields.includes(el)) newObj[el] = obj[el];
-  });
-  return newObj;
 };
 
 // Structure error messages
@@ -114,6 +105,33 @@ static getUser = catchAsync(async (req, res, next) => {
     )
   });
 
+  // finds requested user and updates and adds credit card to user
+  static createCreditCards = catchAsync(async (req, res, next) => {
+    let username = req.params.username;
+
+    // store credit card details
+    let createcreditCard = req.body.creditCards;
+   
+    // find by username and update/add credit card
+    User.findOneAndUpdate({username}, {$set: {creditCards: createcreditCard }}, 
+    {
+      new: true
+    }, (error, data) => {
+      if(error) {
+        return next(new AppError("ERROR", 404));
+      } 
+      else {
+        if (data == null) 
+        {
+          res.send("username not found")
+        } else {
+          res.send(data)
+          }
+        }
+      }
+    )
+  });
+
 }
 
 // Routes
@@ -121,5 +139,6 @@ router.post("/create", userController.createUser);
 router.get("/", userController.getAllUsers);
 router.get("/username/:username", userController.getUser);
 router.put("/updateuser/:username", userController.updatedUser);
+router.post("/creditcards/:username", userController.createCreditCards);
 
 module.exports = router;
