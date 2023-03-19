@@ -65,12 +65,12 @@ static getUser = catchAsync(async (req, res, next) => {
   const username = req.params.username;
 
     const user = await User.find({ username });
-    if(!username) {
-      return next("user not found", 404);
-    };
-    res.status(200).json(user);
-});
 
+    if(!user) {
+      return next (new AppError("user not found", 404));
+    }
+      res.status(200).json(user);
+});
 
 // finds requested user and updates all user allowed fields per feature checklist
   static updatedUser = catchAsync(async (req, res, next) => {
