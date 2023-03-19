@@ -2,6 +2,14 @@ const express = require('express');
 const router = express.Router();
 const User = require('./../models/userModel');
 
+// Automate try / catch blocks
+const catchAsync = fn => {
+  return (req, res, next) => {
+    fn(req, res, next).catch(next);
+  };
+};
+
+// REMOVE ME MAYBE
 const filterObj = (obj, ...allowedFields) => {
   const newObj = {};
   Object.keys(obj).forEach(el => {
@@ -10,19 +18,28 @@ const filterObj = (obj, ...allowedFields) => {
   return newObj;
 };
 
+// Structure error messages
+class AppError extends Error {
+  constructor(message, statusCode) {
+    super(message);
+
+    this.statusCode = statusCode;
+    this.status = `${statusCode}`.startsWith('4') ? 'fail' : 'error';
+    this.isOperational = true;
+
+    Error.captureStackTrace(this, this.constructor);
+  }
+}
+
 class userController {
 
-static getAllUsers = async (req, res) => {
-    try {
+static getAllUsers = catchAsync(async (req, res) => {
         const users = await User.find();
 
         res.status(200).json(users);
-    } catch (error) {
-        res.status(404).json({ message: error });
-    }
-};
+});
 
-static createUser = async (req, res) => {
+static createUser = catchAsync(async (req, res) => {
     const {
       username,
       password,
@@ -46,87 +63,63 @@ static createUser = async (req, res) => {
       wishList,
       shoppingCart
     });
-    try {
+
         await user.save();
         res.status(201).send("User added!");
-      } catch (error) {
-        res.status(404).json({ message: error });
-      }
-    };
+      
+    });
 
-// "/users/username/USERNAME" returns the user with specified username
-static getUser = async (req, res) => {
+// "/users/username/:username" returns the user with queried username
+static getUser = catchAsync(async (req, res, next) => {
   const username = req.params.username;
 
-  try {
     const user = await User.find({ username });
+    if(!username) {
+      return next("user not found", 404);
+    };
     res.status(200).json(user);
+});
 
-   /* if (!user) {
-      return ('No user with that username found', 404);
-    }
-    */
-  } catch (error) {
-    res.status(404).json({ message: error });
-  }
-};
 
-static updateUser = async (req, res) => {
-  const username = req.params.username;
-console.log(username);
-try{
-  const filteredBody = filterObj(req.body, 
-    'username', 'password', 'passwordConfirm', 'name', 
-    'homeAddress', 'creditCards', 'wishList', 'shoppingCart');
+// finds requested user and updates all user allowed fields per feature checklist
+  static updatedUser = catchAsync(async (req, res, next) => {
+    let username = req.params.username;
 
- console.log(req.body);
- const updatedUser = await User.findManyAndUpdate(username, filteredBody, {
-  new: true,
-  runValidators: true
- });
+    // updated user fields to be updated in Postman
+    let updatedusername = req.body.username;
+    let updatedpassword = req.body.password;
+    let updatedpasswordConfirm = req.body.passwordConfirm;
+    let updatedname = req.body.name;
+    let updatedhomeAddress = req.body.homeAddress;
 
- res.status(200).json({
-  status: 'success',
-  data: {
-    user: updatedUser
-  }
- });
-} catch (error) {
-  res.status(404).json({ message: error });
-}
-};
-
-static updateMe = async (req, res) => {
-  const username = req.params.id;
-    try{
-        // Filter out fileds that are not allowed to be updated
-    const filteredBody = filterObj(req.body, 
-      'username', 'password', 'passwordConfirm', 'name', 
-      'homeAddress', 'creditCards', 'wishList', 'shoppingCart');
-
-    // Update user documnet
-    const updatedUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {
-      new: true,
-      runValidators: true
-    });
-  
-    res.status(200).json({
-      status: 'success',
-      data: {
-        user: updatedUser
+    // find by username and update allowed fields
+    User.findOneAndUpdate({username}, {$set: {username: updatedusername, password: updatedpassword, 
+      passwordConfirm: updatedpasswordConfirm, name: updatedname, homeAddress: updatedhomeAddress
+    }}, 
+    {
+      new: true
+    }, (error, data) => {
+      if(error) {
+        return next(new AppError("ERROR", 404));
+      } 
+      else {
+        if (data == null) 
+        {
+          res.send("username not found")
+        } else {
+          res.send(data)
+          }
+        }
       }
-    });
-} catch (error) {
-    res.status(404).json({ message: error });
-}
-}
+    )
+  });
+
 }
 
 // Routes
 router.get("/", userController.getAllUsers);
-router.post('/create', userController.createUser);
-router.get('/username/:username', userController.getUser);
-router.patch('/updateuser/:username', userController.updateUser); //.delete(userController.deleteUser);
-//router.patch('/users/updateMe', userController.updateMe);
+router.post("/create", userController.createUser);
+router.get("/username/:username", userController.getUser);
+router.put("/updateuser/:username", userController.updatedUser);
 
 module.exports = router;
