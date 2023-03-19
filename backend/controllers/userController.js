@@ -33,12 +33,6 @@ class AppError extends Error {
 
 class userController {
 
-static getAllUsers = catchAsync(async (req, res) => {
-        const users = await User.find();
-
-        res.status(200).json(users);
-});
-
 static createUser = catchAsync(async (req, res) => {
     const {
       username,
@@ -68,6 +62,12 @@ static createUser = catchAsync(async (req, res) => {
         res.status(201).send("User added!");
       
     });
+
+    static getAllUsers = catchAsync(async (req, res) => {
+      const users = await User.find();
+
+      res.status(200).json(users);
+});
 
 // "/users/username/:username" returns the user with queried username
 static getUser = catchAsync(async (req, res, next) => {
@@ -117,8 +117,8 @@ static getUser = catchAsync(async (req, res, next) => {
 }
 
 // Routes
-router.get("/", userController.getAllUsers);
 router.post("/create", userController.createUser);
+router.get("/", userController.getAllUsers);
 router.get("/username/:username", userController.getUser);
 router.put("/updateuser/:username", userController.updatedUser);
 
