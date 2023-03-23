@@ -107,13 +107,11 @@ app.get("/authors/id/:authorID", async (req, res) => {
 app.use("/browser", BookBrowsingController); // Feature 1
 // ----------------------------------------------------------------------------------
 
-<<<<<<< HEAD
 // ------------------------------ Feature 3 ---------------------------------------
 // 3.1 Retrieve the subtotal price of all items in the user’s shopping cart. 
 app.get("/shoppingCart/:username/total",async(req, res)=>{
   const username= req.params.username;
   const shoppingCart = await User.findOne({username:username});
-  const testBook = await Books.findOne({ISB:{$toInt:321543666}});
   
   let subtotal= 0.0;
 
@@ -217,10 +215,8 @@ app.delete("/shoppingCart/:username/remove/:ISBN",async(req,res)=>{
   
   })
 // ----------------------------------------------------------------------------------
-=======
 // ------------------------------ Feature 4 ---------------------------------------
 app.use("/books", BookDetailsController); // Feature 4
 // ----------------------------------------------------------------------------------
 
->>>>>>> e002fe4fdf316ddad01789e8c2d4a2d74ccb2ea0
 app.listen(PORT, () => console.log(`Server started on port ${PORT}...`));
