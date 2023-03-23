@@ -197,6 +197,35 @@ app.use("/browser", BookBrowsingController); // Feature 1
 
 // ------------------------------ Feature 3 ---------------------------------------
 // 3.1 Retrieve the subtotal price of all items in the user’s shopping cart. 
+app.get("/shoppingCart/:username/total",async(req, res)=>{
+  const username= req.params.username;
+  const shoppingCart = await User.findOne({username:username});
+  const testBook = await Books.findOne({ISB:{$toInt:321543666}});
+  
+  let subtotal= 0.0;
+
+  try{
+    
+    
+    
+
+    for(let isbn of shoppingCart.shoppingCart){
+      isbn = parseInt(isbn);
+
+      const currentBook = await Books.findOne({ISBN: isbn});
+      subtotal+= parseFloat(currentBook.price);
+      
+      
+    }
+    res.status(200).json(`Shopping Cart Subtotal: $${subtotal}`);
+
+  }catch(error){
+    res.status(404).json({message: error});
+  }
+
+})
+
+
 
 // 3.2 Add a book to the shopping cart. 
 app.post("/shoppingCart/:username/add/:ISBN",async(req, res)=>{
@@ -223,6 +252,39 @@ app.post("/shoppingCart/:username/add/:ISBN",async(req, res)=>{
 
 })
 // 3.3 Retrieve the list of book(s) in the user’s shopping cart. 
+app.get("/shoppingCart/:username",async(req, res)=>{
+  const username= req.params.username;
+  const shoppingCart = await User.findOne({username:username});
+
+  try{
+    
+    
+    const allBooks= [];
+
+    // await User.find(username).forEach(function(doc){
+    //  doc.shoppingCart.forEach(function(d){
+     //   d= parseInt(d);
+
+     //   const currentBook = Books.find({ISBN: isbn})
+     //   allBooks.push(currentBook)
+     // })
+    //})
+
+    for(let isbn of shoppingCart.shoppingCart){
+      isbn = parseInt(isbn);
+
+      const currentBook = await Books.find({ISBN: isbn})
+      allBooks.push(currentBook)
+
+    }
+    res.status(200).json(allBooks);
+
+  }catch(error){
+    res.status(404).json({message: error});
+  }
+
+})
+
 
 // 3.4 Delete a book from the shopping cart instance for that user.
 app.delete("/shoppingCart/:username/remove/:ISBN",async(req,res)=>{
