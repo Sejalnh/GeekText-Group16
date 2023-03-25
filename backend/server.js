@@ -8,6 +8,7 @@ const cors = require("cors");
 
 const BookBrowsingController = require("./controllers/BookBrowsingController");
 const BookDetailsController = require("./controllers/BookDetailsController");
+const ShoppingCartController = require("./controllers/ShoppingCartController");
 
 // TODO: move into .env for PRODUCTION
 const PORT = 3000;
@@ -108,112 +109,7 @@ app.use("/browser", BookBrowsingController); // Feature 1
 // ----------------------------------------------------------------------------------
 
 // ------------------------------ Feature 3 ---------------------------------------
-// 3.1 Retrieve the subtotal price of all items in the user’s shopping cart. 
-app.get("/shoppingCart/:username/total",async(req, res)=>{
-  const username= req.params.username;
-  const shoppingCart = await User.findOne({username:username});
-  
-  let subtotal= 0.0;
-
-  try{
-    
-    
-    
-
-    for(let isbn of shoppingCart.shoppingCart){
-      isbn = parseInt(isbn);
-
-      const currentBook = await Books.findOne({ISBN: isbn});
-      subtotal+= parseFloat(currentBook.price);
-      
-      
-    }
-    res.status(200).json(`Shopping Cart Subtotal: $${subtotal}`);
-
-  }catch(error){
-    res.status(404).json({message: error});
-  }
-
-})
-
-
-
-// 3.2 Add a book to the shopping cart. 
-app.post("/shoppingCart/:username/add/:ISBN",async(req, res)=>{
-  const username= req.params.username;
-  const newISBN= req.params.ISBN;
-  
-  
-  try{
-    const test1= await Books.exists({ISBN:newISBN});
-    
-    if(!test1){
-
-      return res.status(404).json({ message: `No such ISBN: ${newISBN}` });
-  }else{
-
-   const shoppingCart= await User.findOneAndUpdate({username},{$push:{shoppingCart:newISBN}})
-    res.status(200).json({ message:shoppingCart});
-  }
-
-  }catch(error) {
-    res.status(404).json({message: error});
-  }
-
-
-})
-// 3.3 Retrieve the list of book(s) in the user’s shopping cart. 
-app.get("/shoppingCart/:username",async(req, res)=>{
-  const username= req.params.username;
-  const shoppingCart = await User.findOne({username:username});
-
-  try{
-    
-    
-    const allBooks= [];
-
-
-    for(let isbn of shoppingCart.shoppingCart){
-      isbn = parseInt(isbn);
-
-      const currentBook = await Books.find({ISBN: isbn})
-      allBooks.push(currentBook)
-
-    }
-    res.status(200).json(allBooks);
-
-  }catch(error){
-    res.status(404).json({message: error});
-  }
-
-})
-
-
-// 3.4 Delete a book from the shopping cart instance for that user.
-app.delete("/shoppingCart/:username/remove/:ISBN",async(req,res)=>{
-  const username= req.params.username;
-  const newISBN= req.params.ISBN;
-
-  try{
-    const test1= await Books.exists({ISBN:newISBN});
-
-    if(!test1){
-
-      return res.status(404).json({ message: `No such ISBN: ${newISBN}` });
-    }else{
-
-      const shoppingCart= await User.findOneAndUpdate({username},{$pull:{shoppingCart:newISBN}})
-
-      res.status(200).json(shoppingCart);
-    }
-
-  }catch(error) {
-
-    res.status(404).json({message: error});
-  }
-  
-  
-  })
+app.use("/shoppingCart", ShoppingCartController);
 // ----------------------------------------------------------------------------------
 // ------------------------------ Feature 4 ---------------------------------------
 app.use("/books", BookDetailsController); // Feature 4
