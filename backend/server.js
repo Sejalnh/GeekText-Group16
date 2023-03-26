@@ -74,6 +74,31 @@ app.post("/wishlists/add-book/:wishlistId/:bookId", async (req, res) => {
 // 6.3 Must be able to remove a book from a user’s wishlist into the
 //     user’s shopping cart
 
+app.delete("/wishlists/add-to-cart/:wishlistId/:bookId", async (req, res) => {
+  const wishlistId = req.params.wishlistId; 
+  const bookId = req.params.bookId;
+
+  try {
+
+    const wishlist = await Wishlist.findById(wishlistId);
+    const username = wishlist.username;
+
+    await User.findOneAndUpdate(
+      { username },
+      { $push: { shopppingCart: bookId } }
+    );
+
+    await Wishlist.findOneAndUpdate(
+      { _id: wishlist }, 
+      { $pull : { items: { bookId } } }
+    );
+
+    res.status(200).json({ message: 'Book added to shopping cart!' });
+  } catch (error) {
+    res.status(400).json({ message : error });
+  }
+});
+
 // 6.4 Must be able to list the book’s in a user’s wishlist
 
 app.get("/wishlists/view/:name", async (req, res) => {
