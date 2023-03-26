@@ -107,7 +107,7 @@ class ShoppingCartController {
 
 router.get("/:username/total", ShoppingCartController.getSubtotal);
 router.get("/:username", ShoppingCartController.getBookList);
-router.get("/:username/add/:ISBN", ShoppingCartController.addBook);
-router.put("/:username/remove/:ISBN", ShoppingCartController.deleteBook);
+router.post("/:username/add/:ISBN", ShoppingCartController.addBook);
+router.delete("/:username/remove/:ISBN", ShoppingCartController.deleteBook);
 
 module.exports = router;
