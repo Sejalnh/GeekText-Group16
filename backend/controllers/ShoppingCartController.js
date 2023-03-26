@@ -70,7 +70,7 @@ class ShoppingCartController {
     }else{
 
     const shoppingCart= await User.findOneAndUpdate({username},{$push:{shoppingCart:newISBN}})
-    res.status(200).json({ message:shoppingCart});
+    res.status(200).json({ message:`Book ${newISBN} added to shopping cart`});
   }
 
   }catch(error) {
@@ -94,7 +94,7 @@ class ShoppingCartController {
 
       const shoppingCart= await User.findOneAndUpdate({username},{$pull:{shoppingCart:newISBN}})
 
-      res.status(200).json(shoppingCart);
+      res.status(200).json({ message:`Book ${newISBN} removed from shopping cart`});;
     }
 
   }catch(error) {
