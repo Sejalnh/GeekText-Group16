@@ -58,7 +58,8 @@ app.post("/wishlists/add-book/:wishlistId/:bookId", async (req, res) => {
   const bookId = req.params.bookId;
 
   try {
-    // Find the wishlist and update it with the new book if it doesn't already exist
+
+    // Find the wishlist and update it with the new book if it doesn't already exist:
     const wishlist = await Wishlist.findOneAndUpdate(
       { _id: wishlistId },
       { $addToSet: { items: { bookId } } },
@@ -83,11 +84,13 @@ app.delete("/wishlists/add-to-cart/:wishlistId/:bookId", async (req, res) => {
     const wishlist = await Wishlist.findById(wishlistId);
     const username = wishlist.username;
 
+    // Find the user and add the book to their shopping cart: 
     await User.findOneAndUpdate(
       { username },
       { $push: { shopppingCart: bookId } }
     );
 
+    // Delete the book from the user's wishlist: 
     await Wishlist.findOneAndUpdate(
       { _id: wishlist }, 
       { $pull : { items: { bookId } } }
@@ -112,7 +115,29 @@ app.get("/wishlists/view/:name", async (req, res) => {
   }
 });
 
-// Test to get all wishlist: 
+// Additional features: 
+
+// 6.5 Delete a book from a wishlist
+
+app.delete("/wishlists/delete-book/:wishlistId/:bookId", async (req, res) => {
+  const wishlistId = req.params.wishlistId; 
+  const bookId = req.params.bookId;
+
+  try {
+
+    const wishlist = await Wishlist.findById(wishlistId);
+
+    // Delete the book from the user's wishlist: 
+    await Wishlist.findOneAndUpdate(
+      { _id: wishlist }, 
+      { $pull : { items: { bookId } } }
+    );
+
+    res.status(200).json({ message: 'Book deleted from wishlist!' });
+  } catch (error) {
+    res.status(400).json({ message : error });
+  }
+});
 
 // ----------------------------------------------------------------------------------
 
