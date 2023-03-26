@@ -6,6 +6,8 @@ const cors = require("cors");
 const Wishlist = require("./models/wishlistModel");
 const User = require("./models/userModel");
 
+const WishlistManagementController = require("./controllers/WishlistManagementController");
+
 // TODO: move into .env for PRODUCTION
 const PORT = 3000;
 const MONGO_URI =
@@ -31,114 +33,7 @@ mongoose.connect(MONGO_URI, { useNewUrlParser: true }, () =>
 
 // ROUTES
 // ------------------------------ Feature 6 ---------------------------------------
-// 6.1 Must be able to create a wishlist of books that belongs to user and
-//     has a unique name
-
-app.post("/wishlists/create", async (req, res) => {
-  const { name, username, items } = req.body;
-
-  const wish = new Wishlist({
-    name,
-    username,
-    items
-  });
-
-  try {
-    await wish.save();
-    res.status(200).send("Wishlist created!");
-  } catch (error) {
-    res.status(400).json({ message: error });
-  }
-});
-
-// 6.2 Must be able to add a book to a user’s wishlist
-
-app.post("/wishlists/add-book/:wishlistId/:bookId", async (req, res) => {
-  const wishlistId = req.params.wishlistId;
-  const bookId = req.params.bookId;
-
-  try {
-
-    // Find the wishlist and update it with the new book if it doesn't already exist:
-    const wishlist = await Wishlist.findOneAndUpdate(
-      { _id: wishlistId },
-      { $addToSet: { items: { bookId } } },
-      { new: true, upsert: true }
-    );
-
-    res.status(200).json({ message: 'Book added to wishlist' });
-  } catch (error) {
-    res.status(400).json({ message : error });
-  }
-});
-
-// 6.3 Must be able to remove a book from a user’s wishlist into the
-//     user’s shopping cart
-
-app.delete("/wishlists/add-to-cart/:wishlistId/:bookId", async (req, res) => {
-  const wishlistId = req.params.wishlistId; 
-  const bookId = req.params.bookId;
-
-  try {
-
-    const wishlist = await Wishlist.findById(wishlistId);
-    const username = wishlist.username;
-
-    // Find the user and add the book to their shopping cart: 
-    await User.findOneAndUpdate(
-      { username },
-      { $push: { shopppingCart: bookId } }
-    );
-
-    // Delete the book from the user's wishlist: 
-    await Wishlist.findOneAndUpdate(
-      { _id: wishlist }, 
-      { $pull : { items: { bookId } } }
-    );
-
-    res.status(200).json({ message: 'Book added to shopping cart!' });
-  } catch (error) {
-    res.status(400).json({ message : error });
-  }
-});
-
-// 6.4 Must be able to list the book’s in a user’s wishlist
-
-app.get("/wishlists/view/:name", async (req, res) => {
-  const name = req.params.name; 
-
-  try {
-    const wishlist = await Wishlist.find({ name }); 
-    res.status(200).json(wishlist);
-  } catch (error) {
-    res.status(404).json({ message : error });
-  }
-});
-
-// Additional features: 
-
-// 6.5 Delete a book from a wishlist
-
-app.delete("/wishlists/delete-book/:wishlistId/:bookId", async (req, res) => {
-  const wishlistId = req.params.wishlistId; 
-  const bookId = req.params.bookId;
-
-  try {
-
-    const wishlist = await Wishlist.findById(wishlistId);
-
-    // Delete the book from the user's wishlist: 
-    await Wishlist.findOneAndUpdate(
-      { _id: wishlist }, 
-      { $pull : { items: { bookId } } }
-    );
-
-    res.status(200).json({ message: 'Book deleted from wishlist!' });
-  } catch (error) {
-    res.status(400).json({ message : error });
-  }
-});
-
+app.use("/wishlists", WishlistManagementController); // Feature 6
 // ----------------------------------------------------------------------------------
 
 // ------------------------------ Feature 4 ---------------------------------------
