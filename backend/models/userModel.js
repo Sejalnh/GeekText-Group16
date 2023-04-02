@@ -25,7 +25,7 @@ const userSchema = mongoose.Schema({
   password: {
     type: String,
     required: true,
-    minlength: 5,
+    minlength: 5
     //select: false  // hides PW in output (database)
   },
   passwordConfirm: {
@@ -36,7 +36,7 @@ const userSchema = mongoose.Schema({
         return el === this.password;
       },
       message: "Passwords are not the same"
-    } 
+    }
   },
   name: {
     firstName: {
