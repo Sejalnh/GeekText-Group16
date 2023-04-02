@@ -8,6 +8,7 @@ const cors = require("cors");
 
 const BookBrowsingController = require("./controllers/BookBrowsingController");
 const BookDetailsController = require("./controllers/BookDetailsController");
+const ShoppingCartController = require("./controllers/ShoppingCartController");
 
 // TODO: move into .env for PRODUCTION
 const PORT = 3000;
@@ -107,6 +108,9 @@ app.get("/authors/id/:authorID", async (req, res) => {
 app.use("/browser", BookBrowsingController); // Feature 1
 // ----------------------------------------------------------------------------------
 
+// ------------------------------ Feature 3 ---------------------------------------
+app.use("/shoppingCart", ShoppingCartController);
+// ----------------------------------------------------------------------------------
 // ------------------------------ Feature 4 ---------------------------------------
 app.use("/books", BookDetailsController); // Feature 4
 // ----------------------------------------------------------------------------------
