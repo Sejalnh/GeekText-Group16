@@ -9,10 +9,10 @@ const Wishlist = require("./models/wishlistModel");
 const User = require("./models/userModel");
 
 const WishlistManagementController = require("./controllers/WishlistManagementController");
-
 const BookBrowsingController = require("./controllers/BookBrowsingController");
 const userController = require("./controllers/userController");
 const ShoppingCartController = require("./controllers/ShoppingCartController");
+const BookDetailsController = require("./controllers/BookDetailsController");
 
 // TODO: move into .env for PRODUCTION
 mongoose.set("strictQuery", false);
@@ -87,7 +87,6 @@ app.get("/authors/id/:authorID", async (req, res) => {
 });
 // -------------------------------------------------------------------------------
 
-
 // ------------------------------ Feature 1 ---------------------------------------
 app.use("/browser", BookBrowsingController);
 // --------------------------------------------------------------------------------
@@ -101,7 +100,7 @@ app.use("/shoppingCart", ShoppingCartController);
 // --------------------------------------------------------------------------------
 
 // ------------------------------ Feature 4 ---------------------------------------
-app.use("/books", BookDetailsController); 
+app.use("/books", BookDetailsController);
 // --------------------------------------------------------------------------------
 
 // ------------------------------ Feature 6 ---------------------------------------
