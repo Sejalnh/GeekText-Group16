@@ -1,6 +1,6 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const User = require('./../models/userModel');
+const User = require("./../models/userModel");
 
 // Automate try/catch blocks in Features
 const catchAsync = fn => {
@@ -15,7 +15,7 @@ class AppError extends Error {
     super(message);
 
     this.statusCode = statusCode;
-    this.status = `${statusCode}`.startsWith('4') ? 'fail' : 'error';
+    this.status = `${statusCode}`.startsWith("4") ? "fail" : "error";
     this.isOperational = true;
 
     Error.captureStackTrace(this, this.constructor);
@@ -23,8 +23,7 @@ class AppError extends Error {
 }
 
 class userController {
-
-static createUser = catchAsync(async (req, res) => {
+  static createUser = catchAsync(async (req, res) => {
     const {
       username,
       password,
@@ -36,7 +35,7 @@ static createUser = catchAsync(async (req, res) => {
       wishList,
       shoppingCart
     } = req.body;
-  
+
     const user = new User({
       username,
       password,
@@ -49,30 +48,29 @@ static createUser = catchAsync(async (req, res) => {
       shoppingCart
     });
 
-        await user.save();
-        res.status(201).send("User added!");
-      
-    });
+    await user.save();
+    res.status(201).send("User added!");
+  });
 
-    static getAllUsers = catchAsync(async (req, res) => {
-      const users = await User.find();
+  static getAllUsers = catchAsync(async (req, res) => {
+    const users = await User.find();
 
-      res.status(200).json(users);
-});
+    res.status(200).json(users);
+  });
 
-// "/users/username/:username" returns the user with queried username
-static getUser = catchAsync(async (req, res, next) => {
-  const username = req.params.username;
+  // "/users/username/:username" returns the user with queried username
+  static getUser = catchAsync(async (req, res, next) => {
+    const username = req.params.username;
 
     const user = await User.find({ username });
 
-    if(!user) {
-      return next (new AppError("user not found", 404));
+    if (!user) {
+      return next(new AppError("user not found", 404));
     }
-      res.status(200).json(user);
-});
+    res.status(200).json(user);
+  });
 
-// finds requested user and updates all user allowed fields per feature checklist
+  // finds requested user and updates all user allowed fields per feature checklist
   static updatedUser = catchAsync(async (req, res, next) => {
     let username = req.params.username;
 
@@ -84,25 +82,32 @@ static getUser = catchAsync(async (req, res, next) => {
     let updatedhomeAddress = req.body.homeAddress;
 
     // find by username and update allowed fields
-    User.findOneAndUpdate({username}, {$set: {username: updatedusername, password: updatedpassword, 
-      passwordConfirm: updatedpasswordConfirm, name: updatedname, homeAddress: updatedhomeAddress
-    }}, 
-    {
-      new: true
-    }, (error, data) => {
-      if(error) {
-        return next(new AppError("ERROR", 404));
-      } 
-      else {
-        if (data == null) 
-        {
-          res.send("username not found")
+    User.findOneAndUpdate(
+      { username },
+      {
+        $set: {
+          username: updatedusername,
+          password: updatedpassword,
+          passwordConfirm: updatedpasswordConfirm,
+          name: updatedname,
+          homeAddress: updatedhomeAddress
+        }
+      },
+      {
+        new: true
+      },
+      (error, data) => {
+        if (error) {
+          return next(new AppError("ERROR", 404));
         } else {
-          res.send(data)
+          if (data == null) {
+            res.send("username not found");
+          } else {
+            res.send(data);
           }
         }
       }
-    )
+    );
   });
 
   // finds requested user and updates and adds credit card to user
@@ -111,27 +116,27 @@ static getUser = catchAsync(async (req, res, next) => {
 
     // store credit card details
     let createcreditCard = req.body.creditCards;
-   
+
     // find by username and update/add credit card
-    User.findOneAndUpdate({username}, {$set: {creditCards: createcreditCard }}, 
-    {
-      new: true
-    }, (error, data) => {
-      if(error) {
-        return next(new AppError("ERROR", 404));
-      } 
-      else {
-        if (data == null) 
-        {
-          res.send("username not found")
+    User.findOneAndUpdate(
+      { username },
+      { $set: { creditCards: createcreditCard } },
+      {
+        new: true
+      },
+      (error, data) => {
+        if (error) {
+          return next(new AppError("ERROR", 404));
         } else {
-          res.send(data)
+          if (data == null) {
+            res.send("username not found");
+          } else {
+            res.send(data);
           }
         }
       }
-    )
+    );
   });
-
 }
 
 // Routes
