@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const Wishlist = require("./models/wishlistModel");
-const User = require("./models/userModel");
+const Wishlist = require("../models/wishlistModel");
+const User = require("../models/userModel");
 
 // ------------------------- Feature 6 ---------------------------- //
 
