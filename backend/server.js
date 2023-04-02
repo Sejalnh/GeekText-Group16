@@ -13,7 +13,8 @@ const BookBrowsingController = require("./controllers/BookBrowsingController");
 const userController = require("./controllers/userController");
 const ShoppingCartController = require("./controllers/ShoppingCartController");
 const BookDetailsController = require("./controllers/BookDetailsController");
-
+const BookCommentController=require('./controllers/BookCommentController');
+const BookRatingController=require('./controllers/BookRatingController');
 // TODO: move into .env for PRODUCTION
 mongoose.set("strictQuery", false);
 const PORT = 3000;
@@ -105,6 +106,10 @@ app.use("/books", BookDetailsController);
 
 // ------------------------------ Feature 6 ---------------------------------------
 app.use("/wishlists", WishlistManagementController);
+// ----------------------------------------------------------------------------------
+// ------------------------------ Feature5---------------------------------------
+app.use("/books-comment", BookCommentController); // Feature 5
+app.use("/books-rating", BookRatingController); // Feature 5
 // ----------------------------------------------------------------------------------
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}...`));
