@@ -1,14 +1,13 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
-const bcrypt = require("bcryptjs");
 
 const creditCardSchema = mongoose.Schema({
   creditCardNumber: {
-    type: Number,
+    type: String,
     required: true
   },
   securityCode: {
-    type: Number,
+    type: String,
     required: true
   },
   expirationDate: {
@@ -27,6 +26,7 @@ const userSchema = mongoose.Schema({
     type: String,
     required: true,
     minlength: 5
+    //select: false  // hides PW in output (database)
   },
   passwordConfirm: {
     type: String,
@@ -81,22 +81,10 @@ const userSchema = mongoose.Schema({
   wishlist: {
     type: Map,
     of: [String],
-    required: true
+    required: false
   },
   creditCards: [creditCardSchema],
   shoppingCart: [String]
-});
-
-userSchema.pre("save", async function (next) {
-  // Only run this function if password was modified
-  if (!this.isModified("password")) return next();
-
-  // Hash the password with a cost of 12
-  this.passwordConfirm = await bcrypt.hash(this.password, 12);
-
-  //Delete passwordCOnfirm filed
-  this.passwordConfirm = undefined;
-  next();
 });
 
 module.exports = mongoose.model("User", userSchema);
