@@ -1,28 +1,29 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const User = require('./../models/userModel');
+const User = require("./../models/userModel");
 
-const filterObj = (obj, ...allowedFields) => {
-  const newObj = {};
-  Object.keys(obj).forEach(el => {
-    if (allowedFields.includes(el)) newObj[el] = obj[el];
-  });
-  return newObj;
+// Automate try/catch blocks in Features
+const catchAsync = fn => {
+  return (req, res, next) => {
+    fn(req, res, next).catch(next);
+  };
 };
+
+// Structure error messages
+class AppError extends Error {
+  constructor(message, statusCode) {
+    super(message);
+
+    this.statusCode = statusCode;
+    this.status = `${statusCode}`.startsWith("4") ? "fail" : "error";
+    this.isOperational = true;
+
+    Error.captureStackTrace(this, this.constructor);
+  }
+}
 
 class userController {
-
-static getAllUsers = async (req, res) => {
-    try {
-        const users = await User.find();
-
-        res.status(200).json(users);
-    } catch (error) {
-        res.status(404).json({ message: error });
-    }
-};
-
-static createUser = async (req, res) => {
+  static createUser = catchAsync(async (req, res) => {
     const {
       username,
       password,
@@ -34,7 +35,7 @@ static createUser = async (req, res) => {
       wishList,
       shoppingCart
     } = req.body;
-  
+
     const user = new User({
       username,
       password,
@@ -46,87 +47,103 @@ static createUser = async (req, res) => {
       wishList,
       shoppingCart
     });
-    try {
-        await user.save();
-        res.status(201).send("User added!");
-      } catch (error) {
-        res.status(404).json({ message: error });
-      }
-    };
 
-// "/users/username/USERNAME" returns the user with specified username
-static getUser = async (req, res) => {
-  const username = req.params.username;
+    await user.save();
+    res.status(201).send("User added!");
+  });
 
-  try {
+  static getAllUsers = catchAsync(async (req, res) => {
+    const users = await User.find();
+
+    res.status(200).json(users);
+  });
+
+  // "/users/username/:username" returns the user with queried username
+  static getUser = catchAsync(async (req, res, next) => {
+    const username = req.params.username;
+
     const user = await User.find({ username });
-    res.status(200).json(user);
 
-   /* if (!user) {
-      return ('No user with that username found', 404);
+    if (!user) {
+      return next(new AppError("user not found", 404));
     }
-    */
-  } catch (error) {
-    res.status(404).json({ message: error });
-  }
-};
+    res.status(200).json(user);
+  });
 
-static updateUser = async (req, res) => {
-  const username = req.params.username;
-console.log(username);
-try{
-  const filteredBody = filterObj(req.body, 
-    'username', 'password', 'passwordConfirm', 'name', 
-    'homeAddress', 'creditCards', 'wishList', 'shoppingCart');
+  // finds requested user and updates all user allowed fields per feature checklist
+  static updatedUser = catchAsync(async (req, res, next) => {
+    let username = req.params.username;
 
- console.log(req.body);
- const updatedUser = await User.findManyAndUpdate(username, filteredBody, {
-  new: true,
-  runValidators: true
- });
+    // updated user fields to be updated in Postman
+    let updatedusername = req.body.username;
+    let updatedpassword = req.body.password;
+    let updatedpasswordConfirm = req.body.passwordConfirm;
+    let updatedname = req.body.name;
+    let updatedhomeAddress = req.body.homeAddress;
 
- res.status(200).json({
-  status: 'success',
-  data: {
-    user: updatedUser
-  }
- });
-} catch (error) {
-  res.status(404).json({ message: error });
-}
-};
-
-static updateMe = async (req, res) => {
-  const username = req.params.id;
-    try{
-        // Filter out fileds that are not allowed to be updated
-    const filteredBody = filterObj(req.body, 
-      'username', 'password', 'passwordConfirm', 'name', 
-      'homeAddress', 'creditCards', 'wishList', 'shoppingCart');
-
-    // Update user documnet
-    const updatedUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {
-      new: true,
-      runValidators: true
-    });
-  
-    res.status(200).json({
-      status: 'success',
-      data: {
-        user: updatedUser
+    // find by username and update allowed fields
+    User.findOneAndUpdate(
+      { username },
+      {
+        $set: {
+          username: updatedusername,
+          password: updatedpassword,
+          passwordConfirm: updatedpasswordConfirm,
+          name: updatedname,
+          homeAddress: updatedhomeAddress
+        }
+      },
+      {
+        new: true
+      },
+      (error, data) => {
+        if (error) {
+          return next(new AppError("ERROR", 404));
+        } else {
+          if (data == null) {
+            res.send("username not found");
+          } else {
+            res.send(data);
+          }
+        }
       }
-    });
-} catch (error) {
-    res.status(404).json({ message: error });
-}
-}
+    );
+  });
+
+  // finds requested user and updates and adds credit card to user
+  static createCreditCards = catchAsync(async (req, res, next) => {
+    let username = req.params.username;
+
+    // store credit card details
+    let createcreditCard = req.body.creditCards;
+
+    // find by username and update/add credit card
+    User.findOneAndUpdate(
+      { username },
+      { $set: { creditCards: createcreditCard } },
+      {
+        new: true
+      },
+      (error, data) => {
+        if (error) {
+          return next(new AppError("ERROR", 404));
+        } else {
+          if (data == null) {
+            res.send("username not found");
+          } else {
+            res.send(data);
+          }
+        }
+      }
+    );
+  });
 }
 
 // Routes
-router.get("/users", userController.getAllUsers);
-router.post('/users/create', userController.createUser);
-router.get('/users/username/:username', userController.getUser);
-router.patch('/users/updateuser/:username', userController.updateUser); //.delete(userController.deleteUser);
-//router.patch('/users/updateMe', userController.updateMe);
+router.post("/create", userController.createUser);
+router.get("/", userController.getAllUsers);
+router.get("/username/:username", userController.getUser);
+router.put("/updateuser/:username", userController.updatedUser);
+router.post("/creditcards/:username", userController.createCreditCards);
 
 module.exports = router;

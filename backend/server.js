@@ -7,9 +7,11 @@ const Author = require("./models/authorModel");
 const cors = require("cors");
 
 const BookBrowsingController = require("./controllers/BookBrowsingController");
-const userController = require('./controllers/userController');
+const userController = require("./controllers/userController");
+const ShoppingCartController = require("./controllers/ShoppingCartController");
 
 // TODO: move into .env for PRODUCTION
+mongoose.set("strictQuery", false);
 const PORT = 3000;
 const MONGO_URI =
   "mongodb+srv://admin1:1234@cluster0.qngmqvw.mongodb.net/GeekTextDB?retryWrites=true&w=majority";
@@ -122,66 +124,6 @@ app.get("/books/author/:author", async (request, response) => {
 });
 // -------------------------------------------------------------------------------
 
-// ------------------------------ Feature 2 --------------------------------------
-
-// Create a User with username, password and optional fields(name, email and home address)
-/*app.post("/users/create", async (req, res) => {
-  const {
-    username,
-    password,
-    passwordConfirm,
-    name,
-    email,
-    homeAddress,
-    creditCards,
-    wishList,
-    shoppingCart
-  } = req.body;
-
-  const user = new User({
-    username,
-    password,
-    passwordConfirm,
-    name,
-    email,
-    homeAddress,
-    creditCards,
-    wishList,
-    shoppingCart
-  });
-
-  try {
-    await user.save();
-    res.status(201).send("User added!");
-  } catch (error) {
-    res.status(404).json({ message: error });
-  }
-});
-
-// "/users" returns all users within the database
-app.get("/users", async (req, res) => {
-  try {
-    const users = await User.find();
-    res.status(200).json(users);
-  } catch (error) {
-    res.status(404).json({ message: error });
-  }
-});
-
-// "/users/username/USERNAME" returns the user with specified username
-app.get("/users/username/:username", async (req, res) => {
-  const username = req.params.username;
-
-  try {
-    const user = await User.find({ username });
-    res.status(200).json(user);
-  } catch (error) {
-    res.status(404).json({ message: error });
-  }
-});
-*/
-// -------------------------------------------------------------------------------
-
 // ------------------------------- Test -----------------------------------------
 // "/books" returns all books within the database
 app.get("/books", async (request, response) => {
@@ -231,11 +173,15 @@ app.get("/authors/id/:authorID", async (req, res) => {
 // -------------------------------------------------------------------------------
 
 // -------------------------------------------------------------------------------
-app.use("/", userController); // Feature 2
+app.use("/users", userController); // Feature 2
 // -------------------------------------------------------------------------------
 
 // ------------------------------ Feature 1 ---------------------------------------
 app.use("/browser", BookBrowsingController); // Feature 1
+// ----------------------------------------------------------------------------------
+
+// ------------------------------ Feature 4 ---------------------------------------
+app.use("/books", BookDetailsController); // Feature 4
 // ----------------------------------------------------------------------------------
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}...`));
