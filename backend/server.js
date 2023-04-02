@@ -2,9 +2,11 @@ const express = require("express");
 const dotenv = require("dotenv").config(); // TODO: ADD .env for PRODUCTION
 const mongoose = require("mongoose");
 const Books = require("./models/booksModel");
-const User = require("./models/userModel");
-const Author = require("./models/authorModel");
 const cors = require("cors");
+const Wishlist = require("./models/wishlistModel");
+const User = require("./models/userModel");
+
+const WishlistManagementController = require("./controllers/WishlistManagementController");
 
 const BookBrowsingController = require("./controllers/BookBrowsingController");
 const BookDetailsController = require("./controllers/BookDetailsController");
@@ -111,8 +113,13 @@ app.use("/browser", BookBrowsingController); // Feature 1
 // ------------------------------ Feature 3 ---------------------------------------
 app.use("/shoppingCart", ShoppingCartController);
 // ----------------------------------------------------------------------------------
+
 // ------------------------------ Feature 4 ---------------------------------------
 app.use("/books", BookDetailsController); // Feature 4
+// ----------------------------------------------------------------------------------
+
+// ------------------------------ Feature 6 ---------------------------------------
+app.use("/wishlists", WishlistManagementController); // Feature 6
 // ----------------------------------------------------------------------------------
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}...`));
