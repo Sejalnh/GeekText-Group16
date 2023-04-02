@@ -2,15 +2,21 @@ const express = require("express");
 const dotenv = require("dotenv").config(); // TODO: ADD .env for PRODUCTION
 const mongoose = require("mongoose");
 const Books = require("./models/booksModel");
-const User = require("./models/userModel");
 const Author = require("./models/authorModel");
-const cors = require("cors");
 
+const cors = require("cors");
+const Wishlist = require("./models/wishlistModel");
+const User = require("./models/userModel");
+
+const WishlistManagementController = require("./controllers/WishlistManagementController");
 const BookBrowsingController = require("./controllers/BookBrowsingController");
+const userController = require("./controllers/userController");
+const ShoppingCartController = require("./controllers/ShoppingCartController");
 const BookDetailsController = require("./controllers/BookDetailsController");
 const BookCommentController=require('./controllers/BookCommentController');
 const BookRatingController=require('./controllers/BookRatingController');
 // TODO: move into .env for PRODUCTION
+mongoose.set("strictQuery", false);
 const PORT = 3000;
 const MONGO_URI =
   "mongodb+srv://admin1:1234@cluster0.qngmqvw.mongodb.net/GeekTextDB?retryWrites=true&w=majority";
@@ -57,28 +63,6 @@ app.get("/books/isbn/:isbn", async (req, res) => {
   }
 });
 
-// "/users" returns all books within the database
-app.get("/users", async (req, res) => {
-  try {
-    const users = await User.find();
-    res.status(200).json(users);
-  } catch (error) {
-    res.status(404).json({ message: error });
-  }
-});
-
-// "/users/username/USERNAME" returns the user with specified username
-app.get("/users/username/:username", async (req, res) => {
-  const username = req.params.username;
-
-  try {
-    const user = await User.find({ username });
-    res.status(200).json(user);
-  } catch (error) {
-    res.status(404).json({ message: error });
-  }
-});
-
 // "/authors" returns all authors within the database
 app.get("/authors", async (req, res) => {
   try {
@@ -105,11 +89,23 @@ app.get("/authors/id/:authorID", async (req, res) => {
 // -------------------------------------------------------------------------------
 
 // ------------------------------ Feature 1 ---------------------------------------
-app.use("/browser", BookBrowsingController); // Feature 1
-// ----------------------------------------------------------------------------------
+app.use("/browser", BookBrowsingController);
+// --------------------------------------------------------------------------------
+
+// ------------------------------ Feature 2 ---------------------------------------
+app.use("/users", userController);
+// --------------------------------------------------------------------------------
+
+// ------------------------------ Feature 3 ---------------------------------------
+app.use("/shoppingCart", ShoppingCartController);
+// --------------------------------------------------------------------------------
 
 // ------------------------------ Feature 4 ---------------------------------------
-app.use("/books", BookDetailsController); // Feature 4
+app.use("/books", BookDetailsController);
+// --------------------------------------------------------------------------------
+
+// ------------------------------ Feature 6 ---------------------------------------
+app.use("/wishlists", WishlistManagementController);
 // ----------------------------------------------------------------------------------
 // ------------------------------ Feature5---------------------------------------
 app.use("/books-comment", BookCommentController); // Feature 5
