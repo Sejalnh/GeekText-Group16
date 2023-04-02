@@ -7,7 +7,8 @@ const Author = require("./models/authorModel");
 const cors = require("cors");
 
 const BookBrowsingController = require("./controllers/BookBrowsingController");
-const userController = require('./controllers/userController');
+const userController = require("./controllers/userController");
+const ShoppingCartController = require("./controllers/ShoppingCartController");
 
 // TODO: move into .env for PRODUCTION
 mongoose.set("strictQuery", false);
@@ -177,6 +178,10 @@ app.use("/users", userController); // Feature 2
 
 // ------------------------------ Feature 1 ---------------------------------------
 app.use("/browser", BookBrowsingController); // Feature 1
+// ----------------------------------------------------------------------------------
+
+// ------------------------------ Feature 4 ---------------------------------------
+app.use("/books", BookDetailsController); // Feature 4
 // ----------------------------------------------------------------------------------
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}...`));
