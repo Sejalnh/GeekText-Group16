@@ -9,6 +9,7 @@ Online bookstore web app with REST API.
 3. API entry point: `http://localhost:3000/` _(used in Postman)_
 
 ## MongoDB (Atlas) - Credentials
+
 > They are saved in the Team Google Drive. Keep in mind the .DOTENV setup
 
 ## Tech Stack
@@ -88,8 +89,8 @@ Online bookstore web app with REST API.
   - **Endpoint:** `users/username/:username`
   - **Body:** `empty`
   - **Responses:**
-    - **200: JSON object containing user details for requested user
-    - **400 (user not found): There is no user by queried username
+    - \*\*200: JSON object containing user details for requested user
+    - \*\*400 (user not found): There is no user for the queried username
 
 #### 2.3 Update the user and any fields except for email
 
@@ -99,8 +100,8 @@ Online bookstore web app with REST API.
 - **Enpoint:** `users/updateuser/:username`
 - **Body:** JSON object containing user fields to be updated
 - **Responses:**
-  - **200: JSON containing updated user fields
-  - **404 (ERROR): There is no user by the queried username
+  - \*\*200: JSON containing updated user fields
+  - \*\*404 (ERROR): There is no user for the the queried username
 
 #### 2.4 Create Credit Card that belongs to a User
 
@@ -110,5 +111,5 @@ Online bookstore web app with REST API.
 - **Endpoint:** `users/creditcards/:username`
 - **Body:** JSON object containing `creditCardNumber`, `securityCode` and `expiryDate`
 - **responses:**
-  - **200: JSON object containing user details and creditCard fields populated
-  - **404 (ERROR): There is no user by the queried username
+  - \*\*200: JSON object containing user details and creditCard fields populated
+  - \*\*404 (ERROR): There is no user for the the queried username
