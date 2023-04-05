@@ -61,13 +61,15 @@ class userController {
   // "/users/username/:username" returns the user with queried username
   static getUser = catchAsync(async (req, res, next) => {
     const username = req.params.username;
+    const userFound = await User.exists({ username });
 
+    if(!userFound) {
+      return next(new AppError("user not found", 404));
+    } else {
     const user = await User.find({ username });
 
-    if (!user) {
-      return next(new AppError("user not found", 404));
-    }
     res.status(200).json(user);
+  }
   });
 
   // finds requested user and updates all user allowed fields per feature checklist
