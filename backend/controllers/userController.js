@@ -103,7 +103,7 @@ class userController {
           return next(new AppError("ERROR", 404));
         } else {
           if (data == null) {
-            res.send("username not found");
+            res.send("username not found", 404);
           } else {
             res.send(data);
           }
