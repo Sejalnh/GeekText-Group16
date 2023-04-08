@@ -49,7 +49,7 @@ class userController {
     });
 
     await user.save();
-    res.status(201).send("User added!");
+    res.status(201).send("user added");
   });
 
   static getAllUsers = catchAsync(async (req, res) => {
@@ -105,7 +105,7 @@ class userController {
           if (data == null) {
             res.send("username not found", 404);
           } else {
-            res.send(data);
+            res.send("User updated");
           }
         }
       }
@@ -133,7 +133,7 @@ class userController {
           if (data == null) {
             res.send("username not found", 404);
           } else {
-            res.send(data);
+            res.send("credit card added");
           }
         }
       }
