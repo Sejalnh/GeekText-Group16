@@ -9,6 +9,7 @@ Online bookstore web app with REST API.
 3. API entry point: `http://localhost:3000/` _(used in Postman)_
 
 ## MongoDB (Atlas) - Credentials
+
 > They are saved in the Team Google Drive. Keep in mind the .DOTENV setup
 
 ## Tech Stack
@@ -65,4 +66,50 @@ Online bookstore web app with REST API.
     "publisher": "Warner Books"
 }`
 - **Responses:**
+
   - **202 (success):** Successful update message
+
+  ### 2. Profile Management
+
+  #### 2.1 Create a User with username, password and optional fields (name, email address, home address)
+
+  > Provided the user fields, create the user in the database
+
+  - **Method:** POST
+  - **Endpoint:** `users/create`
+  - **Body:** JSON object containing required user fields `username`, `password` and `passwordConfirm`, as well as optional fields `name`, emailAddress`, `homeAddress`, `creditCards`, `wishList`and`shoppingCart`
+  - **Responses:**
+    - **200 (user added): JSON object containing user details for current user created
+
+  #### 2.2 Retrieve a User object and its fields by their username
+
+  > Given a specific username, retrieve the user details
+
+  - **Method:** GET
+  - **Endpoint:** `users/username/:username`
+  - **Body:** `empty`
+  - **Responses:**
+    - **200: JSON object containing user details for requested user
+    - **400 (user not found): There is no user for the queried username
+
+#### 2.3 Update the user and any fields except for email
+
+> Given the username as a key lookup valueand any other user fields, update that user field with the new parameter value
+
+- **Method:** PUT
+- **Enpoint:** `users/updateuser/:username`
+- **Body:** JSON object containing user fields to be updated
+- **Responses:**
+  - **200: JSON containing updated user fields
+  - **404 (ERROR): There is no user for the the queried username
+
+#### 2.4 Create Credit Card that belongs to a User
+
+> Given a user name and credit card details, create a credit card for that user
+
+- **Method:** POST
+- **Endpoint:** `users/creditcards/:username`
+- **Body:** JSON object containing `creditCardNumber`, `securityCode` and `expiryDate`
+- **responses:**
+  - **200: JSON object containing user details and creditCard fields populated
+  - **404 (ERROR): There is no user for the the queried username
