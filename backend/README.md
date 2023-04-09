@@ -120,16 +120,15 @@ Online bookstore web app with REST API.
 name, book description, price, author, genre, publisher , year published and
 copies sold
 
-> Create a book with the provided information including the book ISBN, book
-name, book description, price, author, genre, publisher , year published and
+> Create a book with the provided information including the book ISBN, book name, book description, price, author, genre, publisher , year published and
 copies sold.
 
 - **Method:** POST
 - **Endpoint:** `/books/createBook`
-- **Body:** JSON object containing `title`, `ISBN`, `author`, `genre`,`copiesSold`,`rating`,`publisher`,`price`,`description`,`yearPublished`,`rating`and`comments`
+- **Body:** JSON object containing `title`,`ISBN`,`author`,`genre`,`copiesSold`,`rating`,`publisher`,`price`,`description`,`yearPublished`,`rating`and`comments`
 - **Responses:**
-  - **200 (success):** JSON object containing the book with the provided book information 
-  - **404 (failure):** 
+  - **200 (success):** Book Added! message 
+  - **404 (failure):** Error Message
 
 #### 4.2 Must be able retrieve a book’s details by the ISBN
 
@@ -139,7 +138,8 @@ copies sold.
 - **Endpoint:** `/books/ISBN/:ISBN`
 - **Body:** `empty`
 - **Responses:**
-  - **200 (success):** JSON object containing the books information with the provided ISBN
+  - **200 (success):** JSON object containing the books information from the provided ISBN
+  - **404 (failure):** Error Message
 
 #### 4.3 An administrator must be able to create an author with first name, last
 name, biography and publisher
@@ -148,10 +148,11 @@ name, biography and publisher
 name, biography and publisher
 
 - **Method:** POST
-- **Endpoint:** `browser/books/rating/:rating`
-- **Body:** `empty`
+- **Endpoint:** `books/createAuthor`
+- **Body:** JSON object containing `firstname`, `lastname`, `biography`, `publisher`
 - **Responses:**
-  - **200 (success):** 
+  - **200 (success):** Author added! message
+  - **404 (failure):** Error Message
 
 #### 4.4 Must be able to retrieve a list of books associated with an author
 
@@ -162,8 +163,7 @@ name, biography and publisher
 - **Body:** `empty`
 - **Responses:**
 
-  - **202 (success):** Successful update message
-
-  
+  - **200 (success):** JSON object containing the books associated with the provided author
+  - **404 (failure):** Error Message
   
 
