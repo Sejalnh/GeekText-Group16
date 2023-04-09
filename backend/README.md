@@ -9,7 +9,15 @@ Online bookstore web app with REST API.
 3. API entry point: `http://localhost:3000/` _(used in Postman)_
 
 ## MongoDB (Atlas) - Credentials
-> They are saved in the Team Google Drive. Keep in mind the .DOTENV setup
+
+> **Database entry point:** mongodb+srv://admin1:1234@cluster0.qngmqvw.mongodb.net/GeekTextDB?retryWrites=true&w=majority
+
+**Login:** https://www.mongodb.com/cloud
+
+- **Username:** admin1
+- **Password:** 1234
+
+_In **production** we have to create a **.env** file to contain all login credentials_
 
 ## Tech Stack
 
@@ -66,3 +74,60 @@ Online bookstore web app with REST API.
 }`
 - **Responses:**
   - **202 (success):** Successful update message
+
+### 6. Wishlist Management
+
+#### 6.1 Create a Wishlist
+
+> Given a userId and a unique wishlist name, create a wishlist of books. 
+
+- **Method:** POST
+- **Endpoint:** `/wishlists/create`
+- **Body:** JSON object containing `name` and `username` and optional `items`
+- **Responses:**
+  - **200 (success):** Successful message update
+  - **404 (failure):** Error message
+
+#### 6.2 Add Book to Wishlist
+
+> Add a book to a user's existing wishlist. 
+
+- **Method:** POST
+- **Endpoint:** `/wishlists/add-book/:wishlistId/:bookId`
+- **Body:** `empty`
+- **Responses:**
+  - **200 (success):** Successful message update
+  - **404 (failure):** Error message
+
+#### 6.3 Add to Cart
+
+> Remove a book from a user's existing wishlist into their shopping cart.
+
+- **Method:** DELETE
+- **Endpoint:** `/wishlists/add-to-cart/:wishlistId/:bookId`
+- **Body:** `empty`
+- **Responses:**
+  - **200 (success):** Successful message update
+  - **404 (failure):** Error message
+
+#### 6.4 Retrieve List of Books in Wishlist
+
+> Lists all the books in a user's wishlist along with list name and user name.
+
+- **Method:** GET
+- **Endpoint:** `/wishlists/view/:name`
+- **Body:** `empty`
+- **Responses:**
+  - **200 (success):** JSON object containing all the books in the wishlist, along with the list's name and the user's name and Id.
+  - **404 (failure):** Error message
+
+#### 6.5 Delete a Book
+
+> Remove a book from a user's existing wishlist
+
+- **Method:** DELETE
+- **Endpoint:** `/wishlists/delete-book/:wishlistId/:bookId`
+- **Body:** `empty`
+- **Responses:**
+  - **200 (success):** Successful message update
+  - **404 (failure):** Error message
