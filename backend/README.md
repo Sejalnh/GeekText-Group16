@@ -113,7 +113,55 @@ Online bookstore web app with REST API.
 - **responses:**
   - **200: JSON object containing user details and creditCard fields populated
   - **404 (ERROR): There is no user for the the queried username
-  
+
+
+### 3. Shopping Cart
+
+
+#### 3.1 Retrieve the subtotal price of all items in the user’s shopping cart.
+
+> Get the sum price of all books in shopping cart
+
+- **Method:** GET
+- **Endpoint:** `/shoppingCart/:username/total`
+- **Body:** `empty`
+- **Responses:**
+  - **200 (success):** Shopping Cart Subtotal: (Subtotal)
+  - **404 (failure):** Error Message
+
+#### 3.2 Add a book to the shopping cart.
+
+> Adds an isbn number to the shopping cart array of a user
+
+- **Method:** POST
+- **Endpoint:** `/shoppingCart/:username/add/:ISBN`
+- **Body:** `empty`
+- **Responses:**
+  - **200 (success):** Book (ISBN) added to shopping cart
+  - **404 (failure):** No such ISBN: (ISBN)
+
+#### 3.3 Retrieve the list of book(s) in the user’s shopping cart.
+
+> Get a list of all the books that correspond to the ISBN numbers inside the shopping cart of a user
+
+- **Method:** GET
+- **Endpoint:** `/shoppingCart/:username/list`
+- **Body:** `empty`
+- **Responses:**
+  - **200 (success):** JSON object containing all books corresponding to ISBN numbers in shopping cart
+  - **404 (failure):** Error Message
+
+#### 3.4 Delete a book from the shopping cart instance for that user.
+
+> Remove a specific isbn number from the users shopping cart.
+
+- **Method:** DELETE
+- **Endpoint:** `/shoppingCart/:username/remove/:ISBN`
+- **Body:** `empty`
+- **Responses:**
+  - **200 (success):** Book  (ISBN) removed from shopping cart
+  - **404 (failure):** No such ISBN: (ISBN)
+
   ### 4. Book Details
 
 #### 4.1 An administrator must be able to create a book with the book ISBN, book
