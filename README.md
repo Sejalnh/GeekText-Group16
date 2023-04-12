@@ -32,6 +32,16 @@ Online bookstore web app with REST API.
   - [2.2 Retrieve a User object and its fields by their username](#22-retrieve-a-user-object-and-its-fields-by-their-username)
   - [2.3 Update the user and any fields except for email](#23-update-the-user-and-any-fields-except-for-email)
   - [2.4 Create Credit Card that belongs to a User](#24-create-credit-card-that-belongs-to-a-user)
+- [3. Shopping Cart](#3-shopping-cart)
+  - [3.1 Retrieve the subtotal price of all items in the user’s shopping cart.](#31-retrieve-the-subtotal-price-of-all-items-in-the-users-shopping-cart)
+  - [3.2 Add a book to the shopping cart.](#32-add-a-book-to-the-shopping-cart)
+  - [3.3 Retrieve the list of book(s) in the user’s shopping cart.](#33-retrieve-the-list-of-books-in-the-users-shopping-cart)
+  - [3.4 Delete a book from the shopping cart instance for that user.](#34-delete-a-book-from-the-shopping-cart-instance-for-that-user)
+- [4. Book Details](#4-book-details)
+  - [4.1 An administrator must be able to create a book with the book ISBN, book](#41-an-administrator-must-be-able-to-create-a-book-with-the-book-isbn-book)
+  - [4.2 Must be able retrieve a book’s details by the ISBN](#42-must-be-able-retrieve-a-books-details-by-the-isbn)
+  - [4.3 An administrator must be able to create an author with first name, last](#43-an-administrator-must-be-able-to-create-an-author-with-first-name-last)
+  - [4.4 Must be able to retrieve a list of books associated with an author](#44-must-be-able-to-retrieve-a-list-of-books-associated-with-an-author)
 
 ### 1. Book Browsing and Sorting
 
@@ -126,3 +136,104 @@ Online bookstore web app with REST API.
 - **responses:**
   - \*\*200: JSON object containing user details and creditCard fields populated
   - \*\*404 (ERROR): There is no user for the the queried username
+
+## 3. Shopping Cart
+
+#### 3.1 Retrieve the subtotal price of all items in the user’s shopping cart.
+
+> Get the sum price of all books in shopping cart
+
+- **Method:** GET
+- **Endpoint:** `/shoppingCart/:username/total`
+- **Body:** `empty`
+- **Responses:**
+  - **200 (success):** Shopping Cart Subtotal: (Subtotal)
+  - **404 (failure):** Error Message
+
+#### 3.2 Add a book to the shopping cart.
+
+> Adds an isbn number to the shopping cart array of a user
+
+- **Method:** POST
+- **Endpoint:** `/shoppingCart/:username/add/:ISBN`
+- **Body:** `empty`
+- **Responses:**
+  - **200 (success):** Book (ISBN) added to shopping cart
+  - **404 (failure):** No such ISBN: (ISBN)
+
+#### 3.3 Retrieve the list of book(s) in the user’s shopping cart.
+
+> Get a list of all the books that correspond to the ISBN numbers inside the shopping cart of a user
+
+- **Method:** GET
+- **Endpoint:** `/shoppingCart/:username/list`
+- **Body:** `empty`
+- **Responses:**
+  - **200 (success):** JSON object containing all books corresponding to ISBN numbers in shopping cart
+  - **404 (failure):** Error Message
+
+#### 3.4 Delete a book from the shopping cart instance for that user.
+
+> Remove a specific isbn number from the users shopping cart.
+
+- **Method:** DELETE
+- **Endpoint:** `/shoppingCart/:username/remove/:ISBN`
+- **Body:** `empty`
+- **Responses:**
+
+  - **200 (success):** Book (ISBN) removed from shopping cart
+  - **404 (failure):** No such ISBN: (ISBN)
+
+  ### 4. Book Details
+
+#### 4.1 An administrator must be able to create a book with the book ISBN, book
+
+name, book description, price, author, genre, publisher , year published and
+copies sold
+
+> Create a book with the provided information including the book ISBN, book name, book description, price, author, genre, publisher , year published and
+> copies sold.
+
+- **Method:** POST
+- **Endpoint:** `/books/createBook`
+- **Body:** JSON object containing `title`,`ISBN`,`author`,`genre`,`copiesSold`,`rating`,`publisher`,`price`,`description`,`yearPublished`,`rating`and`comments`
+- **Responses:**
+  - **200 (success):** Book Added! message
+  - **404 (failure):** Error Message
+
+#### 4.2 Must be able retrieve a book’s details by the ISBN
+
+> Return the book details associated with the provided ISBN number
+
+- **Method:** GET
+- **Endpoint:** `/books/ISBN/:ISBN`
+- **Body:** `empty`
+- **Responses:**
+  - **200 (success):** JSON object containing the books information from the provided ISBN
+  - **404 (failure):** Error Message
+
+#### 4.3 An administrator must be able to create an author with first name, last
+
+name, biography and publisher
+
+> Create an author with the provided information including first name, last
+> name, biography and publisher
+
+- **Method:** POST
+- **Endpoint:** `books/createAuthor`
+- **Body:** JSON object containing `firstname`, `lastname`, `biography`, `publisher`
+- **Responses:**
+  - **200 (success):** Author added! message
+  - **404 (failure):** Error Message
+
+#### 4.4 Must be able to retrieve a list of books associated with an author
+
+> Given an authors name, return a list of books associated with that author.
+
+- **Method:** GET
+- **Endpoint:** `books/author/:author`
+- **Body:** `empty`
+- **Responses:**
+
+  - **200 (success):** JSON object containing the books associated with the provided author
+  - **404 (failure):** Error Message

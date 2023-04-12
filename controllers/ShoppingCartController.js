@@ -4,6 +4,8 @@ const Books = require("../models/booksModel");
 const User = require("../models/userModel");
 
 class ShoppingCartController {
+
+
   static getSubtotal = async (req, res) => {
     const username = req.params.username;
     const shoppingCart = await User.findOne({ username: username });
@@ -91,7 +93,7 @@ class ShoppingCartController {
 }
 
 router.get("/:username/total", ShoppingCartController.getSubtotal);
-router.get("/:username", ShoppingCartController.getBookList);
+router.get("/:username/list", ShoppingCartController.getBookList);
 router.post("/:username/add/:ISBN", ShoppingCartController.addBook);
 router.delete("/:username/remove/:ISBN", ShoppingCartController.deleteBook);
 
