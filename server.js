@@ -1,30 +1,28 @@
 const express = require("express");
-const dotenv = require("dotenv").config(); // TODO: ADD .env for PRODUCTION
+const dotenv = require("dotenv").config();
 const mongoose = require("mongoose");
 const Books = require("./models/booksModel");
 const Author = require("./models/authorModel");
 
 const cors = require("cors");
-const Wishlist = require("./models/wishlistModel");
-const User = require("./models/userModel");
 
+// Controllers
 const WishlistManagementController = require("./controllers/WishlistManagementController");
 const BookBrowsingController = require("./controllers/BookBrowsingController");
 const userController = require("./controllers/userController");
 const ShoppingCartController = require("./controllers/ShoppingCartController");
 const BookDetailsController = require("./controllers/BookDetailsController");
-const BookCommentController=require('./controllers/BookCommentController');
-const BookRatingController=require('./controllers/BookRatingController');
-// TODO: move into .env for PRODUCTION
-mongoose.set("strictQuery", false);
-const PORT = 3000;
-const MONGO_URI =
-  "mongodb+srv://admin1:1234@cluster0.qngmqvw.mongodb.net/GeekTextDB?retryWrites=true&w=majority";
+const BookCommentController = require("./controllers/BookCommentController");
+const BookRatingController = require("./controllers/BookRatingController");
 
-const options = {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-};
+mongoose.set("strictQuery", false);
+
+const PORT = process.env.PORT || 3000; // port 3000 by default
+const MONGO_URI = process.env.MONGO_URI;
+
+if (PORT === undefined || MONGO_URI === undefined) {
+  throw new Error("Please check .env for PORT and MONGO_URI!");
+}
 
 // START THE APP
 const app = express();
