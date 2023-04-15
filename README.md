@@ -237,3 +237,62 @@ name, biography and publisher
 
   - **200 (success):** JSON object containing the books associated with the provided author
   - **404 (failure):** Error Message
+  
+  ### 5. Book Rating and Commenting
+ 
+ #### 5.1 Create a rating for a book by a user on a 5 star scale with a date
+
+> Create a rating for a book given by a user.
+
+- **Method:** POST
+- **Endpoint:** `/books-rating/`
+- **Body:** `JSON object containing ISBN, rating, and username`
+> **Note:** `Example`
+  - `{
+  "bookId": "76790538",
+    "rating": 4.5,
+    "username": "MinimalUser"
+}`
+- **Responses:**
+  - **200 (success):** Rating Added! message
+  - **404 (failure):** Error Message
+  
+  
+ #### 5.2 Create a Comment for a Book by a User with a Date
+
+> Create a comment for a book given by a user.
+
+- **Method:** POST
+- **Endpoint:** `/books-comment/`
+- **Body:** `JSON object containing ISBN, comment, and username`
+> **Note:** `Example`
+  - `{
+  "bookId": "76790538",
+    "comment": "Amazing Book!!",
+    "username": "MinimalUser"
+}`
+- **Responses:**
+  - **200 (success):** Comment Added! message
+  - **404 (failure):** Error Message
+
+#### 5.3 Retrieve a List of All Comments for a Particular Book
+
+> Retrieve a list of comments for the book.
+
+- **Method:** GET
+- **Endpoint:** `/books-comment/:ISBN`
+- **Body:** `empty`
+- **Responses:**
+  - **200 (success):** JSON list containing the comments of particular book
+  - **404 (failure):** Error Message
+
+#### 5.4 Retrieve Average Rating for a Particular Book
+
+> Given a book Id, calculate the average rating as a decimal
+
+- **Method:** GET
+- **Endpoint:** `/books-rating/:ISBN`
+- **Body:** `empty`
+- **Responses:**
+  - **200 (success):** decimal which is average rating of particular book
+  - **404 (failure):** Error Message
