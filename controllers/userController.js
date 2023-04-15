@@ -49,7 +49,7 @@ class userController {
     });
 
     await user.save();
-    res.status(201).send("User added!");
+    res.status(201).send("user added");
   });
 
   static getAllUsers = catchAsync(async (req, res) => {
@@ -61,13 +61,15 @@ class userController {
   // "/users/username/:username" returns the user with queried username
   static getUser = catchAsync(async (req, res, next) => {
     const username = req.params.username;
+    const userFound = await User.exists({ username });
 
+    if(!userFound) {
+      return next(new AppError("user not found", 404));
+    } else {
     const user = await User.find({ username });
 
-    if (!user) {
-      return next(new AppError("user not found", 404));
-    }
     res.status(200).json(user);
+  }
   });
 
   // finds requested user and updates all user allowed fields per feature checklist
@@ -101,9 +103,9 @@ class userController {
           return next(new AppError("ERROR", 404));
         } else {
           if (data == null) {
-            res.send("username not found");
+            res.send("username not found", 404);
           } else {
-            res.send(data);
+            res.send("User updated");
           }
         }
       }
@@ -129,9 +131,9 @@ class userController {
           return next(new AppError("ERROR", 404));
         } else {
           if (data == null) {
-            res.send("username not found");
+            res.send("username not found", 404);
           } else {
-            res.send(data);
+            res.send("credit card added");
           }
         }
       }

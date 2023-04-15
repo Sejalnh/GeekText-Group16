@@ -48,7 +48,7 @@ class BookBrowsingController {
         { publisher: publisher_param },
         { $mul: { price: percentDiscount } }
       );
-      res.status(200).json(books);
+      res.status(200).send('Discounts applied!');
     } catch (error) {
       res.status(404).json({ message: error });
     }
